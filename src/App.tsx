@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FunctionComponent } from "react";
+import "antd/dist/antd.less";
+import CustomRouter from "./CommonRouter";
+import { BrowserRouter as Router } from "react-router-dom";
 
-function App() {
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
+import commonState from "state/common";
+import DefaultLayout from "components/DefaultLayout";
+
+const App: FunctionComponent<any> = () => {
+  // const [commons, setCommons] = useRecoilState(commonState);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RecoilRoot>
+      <Router>
+        <DefaultLayout>
+          <CustomRouter />
+        </DefaultLayout>
+      </Router>
+    </RecoilRoot>
   );
-}
+};
 
 export default App;
