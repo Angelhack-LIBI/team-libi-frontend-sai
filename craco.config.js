@@ -3,6 +3,7 @@ const { when, whenDev, whenProd, whenTest, ESLINT_MODES, POSTCSS_MODES } = requi
 const CracoLessPlugin = require('craco-less');
 const CracoAntDesignPlugin = require("craco-antd");
 const CracoAlias = require("craco-alias");
+const OpenBrowserPlugin = require("open-browser-webpack-plugin");
 
 module.exports = {
   reactScriptsVersion: "react-scripts",
@@ -17,7 +18,8 @@ module.exports = {
         source: 'tsconfig',
         tsConfigPath: 'tsconfig.paths.json',
       }
-    }
+    },
+    { plugin: new OpenBrowserPlugin({ url: 'http://localhost:3000' }) }
   ],
   // style: {
   //     modules: {
