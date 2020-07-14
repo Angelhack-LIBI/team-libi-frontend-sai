@@ -1,10 +1,8 @@
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent } from "react";
 
-import { Layout, Menu, Breadcrumb, Select } from "antd";
+import { Layout, Menu, Breadcrumb } from "antd";
 
 import { useIntl } from "react-intl";
-
-import { messages } from '../../index';
 
 import {
   UserOutlined,
@@ -12,6 +10,7 @@ import {
   NotificationOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import LanguageSelector from "components/LanguageSelector";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -22,27 +21,11 @@ const defaultStyle = {
   height: "100%",
 };
 
-const { Option } = Select;
-
-const LaugnageSelector: FunctionComponent<any> = () => {
-  const { formatMessage: fm } = useIntl();
-  const { dom, defaultLanguage } = useMemo<any>(() => {
-    const languages: string[] = Object.keys(messages)
-    const defaultLanguage: string = languages?.[0] || ''
-    return {
-      dom: languages.map((lang: any) => <Option value={lang}>{fm({ id: lang })}</Option>),
-      defaultLanguage
-    }
-  }, [])
-
-  return <Select
-  defaultValue={defaultLanguage}
-  style={{ width: 120 }}
-  // onChange={handleChange}
-    >
-      {dom}
-    </Select>;
-};
+const menuStyle = {
+  // marginLeft: 20,
+  width: '100%',
+  display: 'flex'
+}
 
 const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
   const { children } = props;
@@ -51,10 +34,10 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
   return (
     <Layout style={defaultStyle}>
       <Header className="header" style={{ display: "flex" }}>
-        <div className="logo" style={{ color: "white" }}>
+        <div className="logo" style={{ color: "white", width: 174 }}>
           {fm({ id: "title" })}
         </div>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
+        <Menu theme="dark" mode="horizontal" style={menuStyle} defaultSelectedKeys={["1"]}>
           <Menu.Item key="1">
             <Link to="/">Home</Link>
           </Menu.Item>
@@ -62,8 +45,8 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             <Link to="/about">About</Link>
           </Menu.Item>
 
-          <Menu.Item key="3" disabled style={{ opacity: 1 }}>
-            <LaugnageSelector />
+          <Menu.Item key="3" disabled style={{ opacity: 1, marginLeft: 'auto' }}>
+            <LanguageSelector />
           </Menu.Item>
         </Menu>
       </Header>

@@ -1,21 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { IntlProvider } from "react-intl";
 import "./index.less";
 import App from "./App";
-import ko from "locale/ko.json";
-import en from "locale/en.json";
+
+import {
+  RecoilRoot
+} from "recoil";
+
 import * as serviceWorker from "./serviceWorker";
-
-export const messages: any = { ko, en };
-
-const locale: string = localStorage.getItem("lang") || "ko";
 
 ReactDOM.render(
   <React.StrictMode>
-    <IntlProvider locale={locale} messages={messages[locale]}>
+    <RecoilRoot>
       <App />
-    </IntlProvider>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById("root")
 );

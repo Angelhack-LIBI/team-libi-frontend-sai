@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import "antd/dist/antd.less";
+import { IntlProvider } from "react-intl";
 import CommonRouter from "./CommonRouter";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -12,18 +13,19 @@ import {
 } from "recoil";
 import commonState from "state/common";
 import DefaultLayout from "components/DefaultLayout";
+import langState, { messages } from "state/lang";
 
 const App: FunctionComponent<any> = () => {
-  // const [commons, setCommons] = useRecoilState(commonState);
+  const lang = useRecoilValue(langState);
 
   return (
-    <RecoilRoot>
+    <IntlProvider locale={lang} messages={messages[lang]}>
       <Router>
         <DefaultLayout>
           <CommonRouter />
         </DefaultLayout>
       </Router>
-    </RecoilRoot>
+    </IntlProvider>
   );
 };
 
