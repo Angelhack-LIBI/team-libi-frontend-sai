@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import "antd/dist/antd.less";
-import CustomRouter from "./CommonRouter";
+import CommonRouter from "./CommonRouter";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import {
@@ -20,7 +20,7 @@ const App: FunctionComponent<any> = () => {
     <RecoilRoot>
       <Router>
         <DefaultLayout>
-          <CustomRouter />
+          <CommonRouter />
         </DefaultLayout>
       </Router>
     </RecoilRoot>

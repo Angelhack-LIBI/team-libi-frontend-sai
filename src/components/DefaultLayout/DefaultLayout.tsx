@@ -1,8 +1,10 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useMemo } from "react";
 
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu, Breadcrumb, Select } from "antd";
 
-import { useIntl } from 'react-intl';
+import { useIntl } from "react-intl";
+
+import { messages } from '../../index';
 
 import {
   UserOutlined,
@@ -17,8 +19,30 @@ const { Header, Content, Sider } = Layout;
 interface IDefaultLayoutProps {}
 
 const defaultStyle = {
-  height: '100%'
-}
+  height: "100%",
+};
+
+const { Option } = Select;
+
+const LaugnageSelector: FunctionComponent<any> = () => {
+  const { formatMessage: fm } = useIntl();
+  const { dom, defaultLanguage } = useMemo<any>(() => {
+    const languages: string[] = Object.keys(messages)
+    const defaultLanguage: string = languages?.[0] || ''
+    return {
+      dom: languages.map((lang: any) => <Option value={lang}>{fm({ id: lang })}</Option>),
+      defaultLanguage
+    }
+  }, [])
+
+  return <Select
+  defaultValue={defaultLanguage}
+  style={{ width: 120 }}
+  // onChange={handleChange}
+    >
+      {dom}
+    </Select>;
+};
 
 const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
   const { children } = props;
@@ -26,16 +50,20 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
 
   return (
     <Layout style={defaultStyle}>
-      <Header className="header" style={{ display: 'flex' }}>
-        <div className="logo" style={{ color: 'white' }}>
-          {fm({ id: 'title' })}
+      <Header className="header" style={{ display: "flex" }}>
+        <div className="logo" style={{ color: "white" }}>
+          {fm({ id: "title" })}
         </div>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1">
             <Link to="/">Home</Link>
           </Menu.Item>
           <Menu.Item key="2">
             <Link to="/about">About</Link>
+          </Menu.Item>
+
+          <Menu.Item key="3" disabled style={{ opacity: 1 }}>
+            <LaugnageSelector />
           </Menu.Item>
         </Menu>
       </Header>

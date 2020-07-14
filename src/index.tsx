@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import { IntlProvider } from "react-intl";
 import "./index.less";
 import App from "./App";
-import en from "locale/en.json";
 import ko from "locale/ko.json";
+import en from "locale/en.json";
 import * as serviceWorker from "./serviceWorker";
 
-const messages: any = { en, ko };
+export const messages: any = { ko, en };
 
 const locale: string = localStorage.getItem("lang") || "ko";
 
