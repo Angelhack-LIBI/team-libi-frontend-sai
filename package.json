@@ -26,7 +26,8 @@
     "react-scripts": "3.4.1",
     "recoil": "0.0.10",
     "styled-components": "^5.1.1",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "craco-alias": "^2.1.1"
   },
   "scripts": {
     "start": "craco start",
@@ -50,6 +51,5 @@
     ]
   },
   "devDependencies": {
-    "craco-alias": "^2.1.1"
   }
 }
