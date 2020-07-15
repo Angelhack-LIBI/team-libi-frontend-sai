@@ -1,16 +1,16 @@
-import React, { FunctionComponent } from "react";
-
+import React, { FunctionComponent, useEffect, useMemo } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-
 import { useIntl } from "react-intl";
+import { routerMeta } from 'meta';
 
 import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LanguageSelector from "components/LanguageSelector";
+import { assignRouteProps } from "utils";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -27,9 +27,31 @@ const menuStyle = {
   display: 'flex'
 }
 
+const defaultMenus = Object.keys(routerMeta).reduce((prev: any[], componentKey: string) => {
+  const { path } = assignRouteProps(routerMeta[componentKey])
+  const slashLength: number = (path.match(/\//gi) || []).length
+  if (slashLength === 1) {
+    return [ ...prev, { componentKey, path } ]
+  } else {
+    return prev
+  }
+}, [])
+
 const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
   const { children } = props;
   const { formatMessage: fm } = useIntl();
+  const location  = useLocation();
+  
+  useEffect(() => {
+    console.log('location', location)
+  }, [location])
+
+  const pathDom = useMemo(() => {
+    const { pathname } = location
+    const pathArray = pathname.split('/')
+    const emptyToSpace = (text: string) => text === '' ? ' ' : text
+    return pathArray.map(path => <Breadcrumb.Item key={path}>{emptyToSpace(path)}</Breadcrumb.Item>)
+  }, [location])
 
   return (
     <Layout style={defaultStyle}>
@@ -38,14 +60,11 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           {fm({ id: "title" })}
         </div>
         <Menu theme="dark" mode="horizontal" style={menuStyle} defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1">
-            <Link to="/">Home</Link>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/about">About</Link>
-          </Menu.Item>
+          {defaultMenus.map(({ componentKey, path }) => <Menu.Item key={componentKey}>
+            <Link to={path}>{componentKey}</Link>
+          </Menu.Item>)}
 
-          <Menu.Item key="3" disabled style={{ opacity: 1, marginLeft: 'auto' }}>
+          <Menu.Item key="language-selector" disabled style={{ opacity: 1, marginLeft: 'auto' }}>
             <LanguageSelector />
           </Menu.Item>
         </Menu>
@@ -84,9 +103,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            {pathDom}
           </Breadcrumb>
           <Content
             className="site-layout-background"

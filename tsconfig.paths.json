@@ -7,7 +7,9 @@
       "meta/*": ["meta/*"],
       "state/*": ["state/*"],
       "locale/*": ["locale/*"],
-      "interface/*": ["interface/*"]
+      "interface/*": ["interface/*"],
+      "utils/*": ["utils/*"],
+      "utils": ["utils"]
     }
   }
 }

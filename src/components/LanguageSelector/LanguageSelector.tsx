@@ -13,7 +13,7 @@ const LanguageSelector: FunctionComponent = () => {
   
   const dom = useMemo<ReactElement[]>(() => {
     const languages: Lang[] = Object.keys(messages) as Lang[]
-    return languages.map((lang: Lang) => <Option value={lang}>{fm({ id: lang })}</Option>)
+    return languages.map((lang: Lang) => <Option key={lang} value={lang}>{fm({ id: lang })}</Option>)
   }, [fm])
 
   return <Select
