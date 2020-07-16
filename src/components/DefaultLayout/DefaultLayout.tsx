@@ -177,7 +177,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           </FlexCenter>
         </FlexCenter>
         <FlexCenter style={{ position: 'relative', top: '-40px', lineHeight: 'inherit' }}>
-          <FlexCenter style={{ backgroundColor: '#f0f2f5', padding: '20px 40px', borderRadius: '20px 20px 0px' }}>
+          <FlexCenter style={{ backgroundColor: '#f0f2f5', padding: '20px 20px', borderRadius: '20px 20px 0px' }}>
             {range(0, 10).map(v => {
               return <MockButtons key={v} index={v} />
             })}
