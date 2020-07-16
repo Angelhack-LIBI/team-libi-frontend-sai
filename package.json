@@ -33,6 +33,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "docker-build": "docker build -t dongho1596/libi-front .",
+    "docker-run": "docker run -d -p 80:80 dongho1596/libi-front:latest",
+    "docker-deploy": "docker push dongho1596/libi-front",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
