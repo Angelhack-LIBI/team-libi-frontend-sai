@@ -9,7 +9,8 @@
       "locale/*": ["locale/*"],
       "interface/*": ["interface/*"],
       "utils/*": ["utils/*"],
-      "utils": ["utils"]
+      "utils": ["utils"],
+      "images/*": ["images/*"]
     }
   }
 }

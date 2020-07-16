@@ -1,6 +1,8 @@
 # LIBI Front
 
-엔젤핵 서울 2020 해커톤 LIBI팀 프론트엔드 프로젝트
+## 엔젤핵 서울 2020 해커톤 LIBI팀 프론트엔드 프로젝트 
+
+기업들의 자원들을 쉽게 매칭해주는 서비스
 
 [![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/Angelhack-LIBI/Inventory-Handling-Service-Front)
 

@@ -53,10 +53,10 @@ module.exports = {
         // ...whenDev(() => [new CircularDependencyPlugin()], []),
         // ...whenProd(() => [new WebpackClearConsole()], [])
     ]
-  }
-  // eslint: {
-  //   mode: ESLINT_MODES.file
-  // },
+  },
+  eslint: {
+    mode: ESLINT_MODES.file
+  },
   // style: {
   //     modules: {
   //         localIdentName: ""
