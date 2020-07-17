@@ -5,7 +5,9 @@ export type RouterMetaType = { [key: string] : (string | Omit<RouteProps, 'compo
 const routerMeta: RouterMetaType = {
   Home: { path: '/', exact: true },
   About: '/about',
-  Login: '/login'
+  Login: '/login',
+  Register: '/register',
+  CardView: '/cardview'
 }
 
 export default routerMeta

@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useCallback } from "react";
 
 import { Form, Input, Button, Checkbox } from "antd";
+import RegisterModalButton from "components/RegisterModalButton";
+import FlexCenter from "components/FlexCenter";
 
 interface ILoginFormProps {}
 
@@ -50,11 +52,15 @@ const LoginForm: FunctionComponent<ILoginFormProps> = (props) => {
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+      <Form.Item {...{ wrapperCol: { span: 24 }}}>
+        <Button style={{ width: '100%' }} type="primary" htmlType="submit">
           Submit
         </Button>
       </Form.Item>
+
+      <FlexCenter style={{ width: '100%' }}>
+        <span>아직 회원이 아니세요? </span><RegisterModalButton />
+      </FlexCenter>
     </Form>
   );
 };

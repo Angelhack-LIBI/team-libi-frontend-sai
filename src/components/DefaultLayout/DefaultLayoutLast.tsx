@@ -18,6 +18,7 @@ import LibiLogo from 'images/libi-logo.png';
 import ImageLogo from "components/ImageLogo";
 import styled, { CSSProperties } from "styled-components";
 import FlexCenter from "components/FlexCenter";
+import LoginModalButton from "components/LoginModalButton";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -26,6 +27,7 @@ interface IDefaultLayoutProps {}
 
 const defaultStyle = {
   height: "100%",
+  backgroundColor: 'white'
 };
 
 const menuStyle = {
@@ -110,16 +112,8 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
         style={{
           display: "flex",
           flexFlow: 'column',
-          backgroundColor: '#f0f2f5',
+          backgroundColor: 'white',
           padding: 0,
-          height: 350
-        }}
-      >
-        <FlexCenter style={{
-          backgroundColor: "#c88719",
-          display: "flex",
-          flexFlow: 'column',
-          padding: '0 50px',
           height: 300
         }}>
           <HeaderWrapper>
@@ -130,7 +124,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
               style={{ width: 78, margin: "8px 8px" }}
             />
             <Menu
-              theme={"dark"}
+              // theme={"dark"}
               mode="horizontal"
               style={menuStyle}
               selectedKeys={[pathname]}
@@ -144,10 +138,8 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
                 <LanguageSelector />
               </Menu.Item>
 
-              <Menu.Item key="sign-up" disabled style={{ opacity: 1 }}>
-                <Button type="primary" size={'middle'}>
-                  {fm({ id: 'sign_up' })}
-                </Button>
+              <Menu.Item key="sign-in" disabled style={{ opacity: 1 }}>
+                <LoginModalButton />
               </Menu.Item>
             </Menu>
           </HeaderWrapper>
@@ -157,35 +149,35 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             lineHeight: 'initial',
             marginBottom: '20px'
           }}>
-            <FlexCenter style={{
-              color: 'white',
+            <div style={{ 
+              // color: 'white',
               fontSize: '20px',
               fontWeight: 'bold',
               marginBottom: '16px',
               textAlign: 'center'
             }}>
-              생각하시는 것보다 더 저렴하게
-              <br />자원을 구하실 수 있습니다.
-            </FlexCenter>
+              당신의 가게에는
+              <br /><span style={{ color: '#cc3333' }}>어떤 물건</span>이 필요한가요?
+            </div>
             <Search
               style={{ maxWidth: 330 }}
-              placeholder="시멘트 20톤"
+              placeholder="나무젓가락"
               enterButton={<SearchOutlined />}
               size="large"
               onSearch={(value: string) => console.log(value)}
             />
-          </FlexCenter>
+          {/* </FlexCenter> */}
         </FlexCenter>
-        <FlexCenter style={{ position: 'relative', top: '-40px', lineHeight: 'inherit' }}>
+        {/* <FlexCenter style={{ position: 'relative', top: '-40px', lineHeight: 'inherit' }}>
           <FlexCenter style={{ backgroundColor: '#f0f2f5', padding: '20px 20px', borderRadius: '20px 20px 0px' }}>
             {range(0, 10).map(v => {
               return <MockButtons key={v} index={v} />
             })}
           </FlexCenter>
-        </FlexCenter>
+        </FlexCenter> */}
       </Header>
-      <Layout>
-        <Layout style={{ padding: "0 24px 24px" }}>
+      <Layout style={{ backgroundColor: 'white', border: '1px solid #eeeee' }}>
+        {/* <Layout style={{ padding: "0 24px 24px" }}> */}
           <Breadcrumb style={{ margin: "16px 0" }}>{pathDom}</Breadcrumb>
           <Content
             className="site-layout-background"
@@ -193,13 +185,13 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
               padding: 24,
               margin: 0,
               minHeight: 280,
-              overflow: 'auto',
-              display: 'flex'
+              // overflow: 'auto',
+              // display: 'flex'
             }}
           >
             {children}
           </Content>
-        </Layout>
+        {/* </Layout> */}
       </Layout>
     </Layout>
   );

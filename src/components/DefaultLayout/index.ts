@@ -1,2 +1,2 @@
-import DefaultLayout from './DefaultLayout'
+import DefaultLayout from './DefaultLayoutLast'
 export default DefaultLayout
