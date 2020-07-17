@@ -111,63 +111,39 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
         className="header"
         style={{
           display: "flex",
-          flexFlow: 'column',
-          backgroundColor: 'white',
+          flexFlow: "column",
+          backgroundColor: "white",
           padding: 0,
-          height: 300
-        }}>
-          <HeaderWrapper>
-            <ImageLogo
-              onClick={() => handleRouteClick({ key: '/' })}
-              className="logo"
-              image={LibiLogo}
-              style={{ width: 78, margin: "8px 8px" }}
-            />
-            <Menu
-              // theme={"dark"}
-              mode="horizontal"
-              style={menuStyle}
-              selectedKeys={[pathname]}
-              onClick={handleRouteClick}
-            >
-              {defaultMenus.map(({ componentKey, path }) => (
-                <Menu.Item key={path}>{componentKey}</Menu.Item>
-              ))}
+          // height: 300
+        }}
+      >
+        <HeaderWrapper>
+        <ImageLogo
+          onClick={() => handleRouteClick({ key: "/" })}
+          className="logo"
+          image={LibiLogo}
+          style={{ width: 78, margin: "8px 8px" }}
+        />
+        <Menu
+          // theme={"dark"}
+          mode="horizontal"
+          style={menuStyle}
+          selectedKeys={[pathname]}
+          onClick={handleRouteClick}
+        >
+          {defaultMenus.map(({ componentKey, path }) => (
+            <Menu.Item key={path}>{componentKey}</Menu.Item>
+          ))}
 
-              <Menu.Item key="language-selector" disabled style={{ opacity: 1 }}>
-                <LanguageSelector />
-              </Menu.Item>
+          <Menu.Item key="language-selector" disabled style={{ opacity: 1 }}>
+            <LanguageSelector />
+          </Menu.Item>
 
-              <Menu.Item key="sign-in" disabled style={{ opacity: 1 }}>
-                <LoginModalButton />
-              </Menu.Item>
-            </Menu>
-          </HeaderWrapper>
-          <FlexCenter style={{
-            flex: '1',
-            flexFlow: 'column',
-            lineHeight: 'initial',
-            marginBottom: '20px'
-          }}>
-            <div style={{ 
-              // color: 'white',
-              fontSize: '20px',
-              fontWeight: 'bold',
-              marginBottom: '16px',
-              textAlign: 'center'
-            }}>
-              당신의 가게에는
-              <br /><span style={{ color: '#cc3333' }}>어떤 물건</span>이 필요한가요?
-            </div>
-            <Search
-              style={{ maxWidth: 330 }}
-              placeholder="나무젓가락"
-              enterButton={<SearchOutlined />}
-              size="large"
-              onSearch={(value: string) => console.log(value)}
-            />
-          {/* </FlexCenter> */}
-        </FlexCenter>
+          <Menu.Item key="sign-in" disabled style={{ opacity: 1 }}>
+            <LoginModalButton />
+          </Menu.Item>
+        </Menu>
+        </HeaderWrapper>
         {/* <FlexCenter style={{ position: 'relative', top: '-40px', lineHeight: 'inherit' }}>
           <FlexCenter style={{ backgroundColor: '#f0f2f5', padding: '20px 20px', borderRadius: '20px 20px 0px' }}>
             {range(0, 10).map(v => {
@@ -176,21 +152,53 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           </FlexCenter>
         </FlexCenter> */}
       </Header>
-      <Layout style={{ backgroundColor: 'white', border: '1px solid #eeeee' }}>
-        {/* <Layout style={{ padding: "0 24px 24px" }}> */}
-          <Breadcrumb style={{ margin: "16px 0" }}>{pathDom}</Breadcrumb>
-          <Content
-            className="site-layout-background"
+      <Layout id={'list'} style={{ backgroundColor: "white", border: "1px solid #eeeee", overflow: 'auto' }}>
+        <FlexCenter
+          style={{
+            flex: "1",
+            flexFlow: "column",
+            lineHeight: "initial",
+            marginBottom: "20px",
+          }}
+        >
+          <div
             style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              // overflow: 'auto',
-              // display: 'flex'
+              // color: 'white',
+              fontSize: "20px",
+              fontWeight: "bold",
+              marginBottom: "16px",
+              textAlign: "center",
             }}
           >
-            {children}
-          </Content>
+            당신의 가게에는
+            <br />
+            <span style={{ color: "#cc3333" }}>어떤 물건</span>이 필요한가요?
+          </div>
+          <Search
+            style={{ maxWidth: 330 }}
+            placeholder="나무젓가락"
+            enterButton={<SearchOutlined />}
+            size="large"
+            onSearch={(value: string) => console.log(value)}
+          />
+          {/* </FlexCenter> */}
+        </FlexCenter>
+        {/* <Layout style={{ padding: "0 24px 24px" }}> */}
+        <Breadcrumb style={{ margin: "16px 0" }}>{pathDom}</Breadcrumb>
+        <Content
+          className="site-layout-background"
+          style={{
+            padding: 24,
+            margin: 0,
+            minHeight: 280,
+            alignItems: 'center',
+            // overflow: 'auto',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          {children}
+        </Content>
         {/* </Layout> */}
       </Layout>
     </Layout>

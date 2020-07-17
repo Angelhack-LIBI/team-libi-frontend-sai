@@ -27,7 +27,7 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
       setLoading(true);
       const actuallyLoadMore = (resolve: Function) => {
         // fake new data
-        let newItems = [];
+        let newItems: any[] = [];
         let s = items.length + 1;
         for (let i = 0, l = 12; i < l; i++) {
           newItems.push(Math.random() * 100);
@@ -60,13 +60,13 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
         loadingComponent={<Spin />}
         isActive={true}
       >
-        <Row gutter={[8, 8]} style={{ margin: 0 }}>
+        {/* <Row gutter={[8, 8]} style={{ margin: 0 }}>
           {items.map((v: any, i: number) => (
             <Col key={i} {...breakPoint}>
               <ItemCard />
             </Col>
           ))}
-        </Row>
+        </Row> */}
       </WaypointListContainer>
       {/* <Row gutter={[8, 8]} style={{ margin: 0 }}>
         <Col { ...breakPoint }>

@@ -1,2 +1,2 @@
-import CardView from './CardView'
+import CardView from './CardViewV2'
 export default CardView
