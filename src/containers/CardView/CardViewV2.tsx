@@ -54,7 +54,7 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
         scrollableTarget={'list'}
         dataLength={items.length} //This is important field to render the next data
         next={onLoad}
-        hasMore={false}
+        hasMore={true}
         loader={<Spin />}
         endMessage={
           <p style={{textAlign: 'center'}}>
