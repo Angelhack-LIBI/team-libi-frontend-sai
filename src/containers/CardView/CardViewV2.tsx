@@ -41,7 +41,7 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
         setTimeout(() => {
           actuallyLoadMore(resolve);
           setLoading(false);
-        }, 500);
+        }, 1000000);
       });
     }
   }, [items, setItems, loading, setLoading]);
@@ -54,10 +54,10 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
           dataLength={items.length} //This is important field to render the next data
           next={onLoad}
           hasMore={true}
-          loader={<Spin />}
+          loader={<FlexCenter style={{ width: '100%' }}><Spin /></FlexCenter>}
           endMessage={
             <p style={{textAlign: 'center'}}>
-              <b>Yay! You have seen it all</b>
+              <b>모든 목록을 조회했습니다</b>
             </p>
           }>
           <Row gutter={[16, 16]} style={{ margin: 0 }}>

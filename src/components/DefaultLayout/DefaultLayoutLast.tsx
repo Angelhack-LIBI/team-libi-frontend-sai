@@ -20,7 +20,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import LanguageSelector from "components/LanguageSelector";
 import { assignRouteProps, propsToStyle, range } from "utils";
 
-import LibiLogo from "images/libi-logo.png";
+import Logo from "images/logo.png";
 import ImageLogo from "components/ImageLogo";
 import styled, { CSSProperties } from "styled-components";
 import FlexCenter from "components/FlexCenter";
@@ -131,20 +131,34 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
       <Header
         className="header"
         style={{
-          display: "flex",
-          flexFlow: "column",
+          // display: "flex",
+          // flexFlow: "column",
           backgroundColor: "white",
           padding: 0,
+          borderBottom: '1px solid #eee'
           // height: 300
         }}
       >
-        <HeaderWrapper>
-          <ImageLogo
+        {/* <HeaderWrapper> */}
+          {/* <ImageLogo
+            className={'logo'}
             onClick={() => handleRouteClick({ key: "/" })}
-            className="logo"
-            image={LibiLogo}
+            image={Logo}
             style={{ width: 78, margin: "8px 8px" }}
-          />
+          /> */}
+          <div
+            className="logo"
+            onClick={() => handleRouteClick({ key: "/" })}
+            style={{
+              backgroundImage:`url(${Logo})`,
+              width: 120,
+              height: 31,
+              margin: '16px 24px 16px 0',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              float: 'left'
+            }} />
           <Menu
             // theme={"dark"}
             mode="horizontal"
@@ -152,19 +166,19 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             selectedKeys={[pathname]}
             onClick={handleRouteClick}
           >
-            {defaultMenus.map(({ componentKey, path }) => (
+            {/* {defaultMenus.map(({ componentKey, path }) => (
               <Menu.Item key={path}>{componentKey}</Menu.Item>
-            ))}
+            ))} */}
 
-            <Menu.Item key="language-selector" disabled style={{ opacity: 1 }}>
+            {/* <Menu.Item key="language-selector" disabled style={{ opacity: 1 }}>
               <LanguageSelector />
-            </Menu.Item>
+            </Menu.Item> */}
 
-            <Menu.Item key="sign-in" disabled style={{ opacity: 1 }}>
+            <Menu.Item key="sign-in" disabled style={{ opacity: 1, marginLeft: 'auto' }}>
               <LoginModalButton />
             </Menu.Item>
           </Menu>
-        </HeaderWrapper>
+        {/* </HeaderWrapper> */}
         {/* <FlexCenter style={{ position: 'relative', top: '-40px', lineHeight: 'inherit' }}>
           <FlexCenter style={{ backgroundColor: '#f0f2f5', padding: '20px 20px', borderRadius: '20px 20px 0px' }}>
             {range(0, 10).map(v => {
@@ -186,8 +200,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             flex: "1",
             flexFlow: "column",
             lineHeight: "initial",
-            marginBottom: "20px",
-            padding: '50px 0'
+            padding: '50px 20px'
           }}
         >
           <div
@@ -196,7 +209,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
               fontSize: "35px",
               fontWeight: "bold",
               marginBottom: "20px",
-              textAlign: "center",
+              textAlign: "center"
             }}
           >
             당신의 가게에는
@@ -213,7 +226,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           {/* </FlexCenter> */}
         </FlexCenter>}
         {/* <Layout style={{ padding: "0 24px 24px" }}> */}
-        <Breadcrumb style={{ margin: "16px 0" }}>{pathDom}</Breadcrumb>
+        {/* <Breadcrumb style={{ margin: "16px 0" }}>{pathDom}</Breadcrumb> */}
         <Content
           className="site-layout-background"
           style={{

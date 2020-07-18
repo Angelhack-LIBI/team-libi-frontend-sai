@@ -4,6 +4,7 @@ import { Card } from "antd";
 import FlexCenter from "components/FlexCenter";
 import styled from "styled-components";
 import { propsToStyle, formatNumber } from "utils";
+import { useHistory } from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -18,6 +19,8 @@ interface Props {
 }
 
 const CardWrapper: any = styled.div`
+  border: 1px solid #eee;
+
   & .ant-card-cover {
     position: relative;
     width: 100%;
@@ -63,9 +66,10 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
   title,
   data,
 }) => {
-  const { type = 'groupbuying' } = data
+  const { type = 'groupbuying', id = '1' } = data
+  const history = useHistory()
   return (
-    <CardWrapper>
+    <CardWrapper onClick={() => history.push(`/about/${id}`)}>
       <Card
         hoverable
         // style={{ width: 240 }}
@@ -82,20 +86,20 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
           {type === 'groupbuying' ? '공동구매' : '재고할인'}
         </Tag>
         <Meta style={{ padding: 16 }} title={title || "Europe Street beat"} />
-        <FlexCenter style={{ backgroundColor: "#999", padding: 8 }}>
+        <FlexCenter style={{ backgroundColor: "#eee", padding: 8 }}>
           {Object.keys(data).includes("hopeMondey") ? (
-            <FlexCenter style={{ flex: "1", flexFlow: "column" }}>
+            <FlexCenter style={{ flex: "1", flexFlow: "column", padding: '4px' }}>
               <span>희망 금액</span>
               <span style={{ fontSize: "14px", fontWeight: "bold" }}>
-                {formatNumber(data?.hopeMoney)} 원
+                {`${formatNumber(data?.hopeMoney)} 원`}
               </span>
             </FlexCenter>
           ) : (
             <>
-              <FlexCenter style={{ flex: "1", flexFlow: "column" }}>
+              <FlexCenter style={{ flex: "1", flexFlow: "column", padding: '4px' }}>
                 <span>최소 주문금액</span>
                 <span style={{ fontSize: "14px", fontWeight: "bold" }}>
-                  <span>{`${formatNumber(data?.minMoney)}`}</span>
+                  <span>{`${formatNumber(data?.minMoney)} 원`}</span>
                 </span>
               </FlexCenter>
               <div
@@ -105,7 +109,7 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
                   backgroundColor: "#666",
                 }}
               />
-              <FlexCenter style={{ flex: "1", flexFlow: "column" }}>
+              <FlexCenter style={{ flex: "1", flexFlow: "column", padding: '4px' }}>
                 <span>목표달성률</span>
                 <span>{`${data?.percent} %`}</span>
               </FlexCenter>

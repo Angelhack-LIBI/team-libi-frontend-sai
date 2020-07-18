@@ -10,10 +10,17 @@ import {
   Checkbox,
   Button,
   AutoComplete,
+  Modal,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import axiosInstance from "api/AxiosInstance";
 // import axiosInstance from "api";
+
+const success = () => {
+  Modal.success({
+    content: '회원가입을 축하드립니다',
+  });
+}
 
 const formItemLayout = {
   labelCol: {
@@ -26,13 +33,19 @@ const formItemLayout = {
   },
 };
 
-const RegistrationForm: FunctionComponent<any> = () => {
+const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
     console.log("Received values of form: ", values);
     const data = await axiosInstance.post("/account/", values)
     console.log('data', data)
+    
+    success()
+    if (handleOk) {
+      handleOk()
+    }
+
   };
 
   return (

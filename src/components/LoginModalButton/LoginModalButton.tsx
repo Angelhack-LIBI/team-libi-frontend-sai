@@ -44,14 +44,12 @@ const LoginModalButton: FunctionComponent<ILoginModalProps> = (props) => {
     }
   }, [token, setAccount])
 
-  console.log('token', token)
-
   return <>
     {
       (token || '').length > 0 ? <FlexCenter>
         {`${account?.name}님 안녕하세요`}
-        <Button type="primary" onClick={() => { onDrop() }} size={'small'}>
-          <CloseOutlined />
+        <Button type="primary" style={{ marginLeft: '4px' }} onClick={() => { onDrop() }} size={'small'}>
+          로그아웃
         </Button>
       </FlexCenter> : (
         <Button type="primary" onClick={showModal}>
