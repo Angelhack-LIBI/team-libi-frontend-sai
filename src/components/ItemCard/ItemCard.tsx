@@ -55,7 +55,7 @@ const Tag: any = styled.div`
 
 const tagStyle: any = {
   groupBuying: { backgroundColor: '#cc3333', color: 'white' },
-  stackDiscount: { backgroundColor: '#12cad6', color: 'white' }
+  stackDiscount: { backgroundColor: '#339999', color: 'white' }
 }
 
 const ItemCard: FunctionComponent<IItemCardProps> = ({
@@ -82,7 +82,7 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
           {type === 'groupBuying' ? '공동구매' : '재고할인'}
         </Tag>
         <Meta style={{ padding: 16 }} title={title || "Europe Street beat"} />
-        <FlexCenter style={{ backgroundColor: "#eee", padding: 8 }}>
+        <FlexCenter style={{ backgroundColor: "#999", padding: 8 }}>
           {Object.keys(data).includes("hopeMondey") ? (
             <FlexCenter style={{ flex: "1", flexFlow: "column" }}>
               <span>희망금액</span>
@@ -102,7 +102,7 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
                 style={{
                   width: "1px",
                   height: "30px",
-                  backgroundColor: "#222",
+                  backgroundColor: "#666",
                 }}
               />
               <FlexCenter style={{ flex: "1", flexFlow: "column" }}>

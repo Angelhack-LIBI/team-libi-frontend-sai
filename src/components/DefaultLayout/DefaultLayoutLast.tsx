@@ -1,20 +1,26 @@
-import React, { FunctionComponent, useEffect, useMemo, ChangeEvent, useCallback } from "react";
+import React, {
+  FunctionComponent,
+  useEffect,
+  useMemo,
+  ChangeEvent,
+  useCallback,
+} from "react";
 import { Layout, Menu, Breadcrumb, Input, Button } from "antd";
 import { useIntl } from "react-intl";
-import { routerMeta } from 'meta';
+import { routerMeta } from "meta";
 
 import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
   SearchOutlined,
-  RadarChartOutlined
+  RadarChartOutlined,
 } from "@ant-design/icons";
 import { useLocation, useHistory } from "react-router-dom";
 import LanguageSelector from "components/LanguageSelector";
 import { assignRouteProps, propsToStyle, range } from "utils";
 
-import LibiLogo from 'images/libi-logo.png';
+import LibiLogo from "images/libi-logo.png";
 import ImageLogo from "components/ImageLogo";
 import styled, { CSSProperties } from "styled-components";
 import FlexCenter from "components/FlexCenter";
@@ -27,29 +33,32 @@ interface IDefaultLayoutProps {}
 
 const defaultStyle = {
   height: "100%",
-  backgroundColor: 'white'
+  backgroundColor: "white",
 };
 
 const menuStyle = {
-  display: 'flex',
-  background: 'none',
-  border: 'none',
-  marginLeft: 'auto'
-}
+  display: "flex",
+  background: "none",
+  border: "none",
+  marginLeft: "auto",
+};
 
-const defaultMenus = Object.keys(routerMeta).reduce((prev: any[], componentKey: string) => {
-  const { path } = assignRouteProps(routerMeta[componentKey])
-  console.log('path', path)
-  const slashLength: number = (path.match(/\//gi) || []).length
-  if (slashLength === 1 && path !== '/') {
-    return [ ...prev, { componentKey, path } ]
-  } else {
-    return prev
-  }
-}, [])
+const defaultMenus = Object.keys(routerMeta).reduce(
+  (prev: any[], componentKey: string) => {
+    const { path } = assignRouteProps(routerMeta[componentKey]);
+    console.log("path", path);
+    const slashLength: number = (path.match(/\//gi) || []).length;
+    if (slashLength === 1 && path !== "/") {
+      return [...prev, { componentKey, path }];
+    } else {
+      return prev;
+    }
+  },
+  []
+);
 
 interface HeaderWrapperProps {
-  style?: CSSProperties
+  style?: CSSProperties;
 }
 
 const HeaderWrapper: any = styled.div`
@@ -58,7 +67,7 @@ const HeaderWrapper: any = styled.div`
   height: 64px;
   width: 100%;
   ${(props: HeaderWrapperProps) => propsToStyle(props.style || {})}
-`
+`;
 
 const MockButtonsWrapper: any = styled.div`
   display: -webkit-flex;
@@ -71,39 +80,49 @@ const MockButtonsWrapper: any = styled.div`
     height: 50px;
   }
   ${(props: HeaderWrapperProps) => propsToStyle(props.style || {})}
-`
+`;
 
 const { Search } = Input;
 
-const MockButtons: any = ({ index }: any) => <MockButtonsWrapper><Button shape='circle' style={{
-  width: 'auto',
-  display: 'flex',
-  height: 'auto',
-  alignItems: 'center',
-  flexFlow: 'column'
-}} type='link' icon={
-  <RadarChartOutlined style={{}} />
-}>
-  <span style={{ margin: 0 }}>
-    목업 {index}
-  </span>
-</Button></MockButtonsWrapper>
+const MockButtons: any = ({ index }: any) => (
+  <MockButtonsWrapper>
+    <Button
+      shape="circle"
+      style={{
+        width: "auto",
+        display: "flex",
+        height: "auto",
+        alignItems: "center",
+        flexFlow: "column",
+      }}
+      type="link"
+      icon={<RadarChartOutlined style={{}} />}
+    >
+      <span style={{ margin: 0 }}>목업 {index}</span>
+    </Button>
+  </MockButtonsWrapper>
+);
 
 const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
   const { children } = props;
   const { formatMessage: fm } = useIntl();
-  const { pathname }  = useLocation();
+  const { pathname } = useLocation();
   const history = useHistory();
 
   const pathDom = useMemo(() => {
-    const pathArray = pathname.split('/')
-    const emptyToSpace = (text: string) => text === '' ? ' ' : text
-    return pathArray.map(path => <Breadcrumb.Item key={path}>{emptyToSpace(path)}</Breadcrumb.Item>)
-  }, [pathname])
+    const pathArray = pathname.split("/");
+    const emptyToSpace = (text: string) => (text === "" ? " " : text);
+    return pathArray.map((path) => (
+      <Breadcrumb.Item key={path}>{emptyToSpace(path)}</Breadcrumb.Item>
+    ));
+  }, [pathname]);
 
-  const handleRouteClick = useCallback(({key}: any) => {
-    history.push(key)
-  }, [history]);
+  const handleRouteClick = useCallback(
+    ({ key }: any) => {
+      history.push(key);
+    },
+    [history]
+  );
 
   return (
     <Layout style={defaultStyle}>
@@ -118,31 +137,31 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
         }}
       >
         <HeaderWrapper>
-        <ImageLogo
-          onClick={() => handleRouteClick({ key: "/" })}
-          className="logo"
-          image={LibiLogo}
-          style={{ width: 78, margin: "8px 8px" }}
-        />
-        <Menu
-          // theme={"dark"}
-          mode="horizontal"
-          style={menuStyle}
-          selectedKeys={[pathname]}
-          onClick={handleRouteClick}
-        >
-          {defaultMenus.map(({ componentKey, path }) => (
-            <Menu.Item key={path}>{componentKey}</Menu.Item>
-          ))}
+          <ImageLogo
+            onClick={() => handleRouteClick({ key: "/" })}
+            className="logo"
+            image={LibiLogo}
+            style={{ width: 78, margin: "8px 8px" }}
+          />
+          <Menu
+            // theme={"dark"}
+            mode="horizontal"
+            style={menuStyle}
+            selectedKeys={[pathname]}
+            onClick={handleRouteClick}
+          >
+            {defaultMenus.map(({ componentKey, path }) => (
+              <Menu.Item key={path}>{componentKey}</Menu.Item>
+            ))}
 
-          <Menu.Item key="language-selector" disabled style={{ opacity: 1 }}>
-            <LanguageSelector />
-          </Menu.Item>
+            <Menu.Item key="language-selector" disabled style={{ opacity: 1 }}>
+              <LanguageSelector />
+            </Menu.Item>
 
-          <Menu.Item key="sign-in" disabled style={{ opacity: 1 }}>
-            <LoginModalButton />
-          </Menu.Item>
-        </Menu>
+            <Menu.Item key="sign-in" disabled style={{ opacity: 1 }}>
+              <LoginModalButton />
+            </Menu.Item>
+          </Menu>
         </HeaderWrapper>
         {/* <FlexCenter style={{ position: 'relative', top: '-40px', lineHeight: 'inherit' }}>
           <FlexCenter style={{ backgroundColor: '#f0f2f5', padding: '20px 20px', borderRadius: '20px 20px 0px' }}>
@@ -152,21 +171,29 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           </FlexCenter>
         </FlexCenter> */}
       </Header>
-      <Layout id={'list'} style={{ backgroundColor: "white", border: "1px solid #eeeee", overflow: 'auto' }}>
+      <Layout
+        id={"list"}
+        style={{
+          backgroundColor: "white",
+          border: "1px solid #eeeee",
+          overflow: "auto",
+        }}
+      >
         <FlexCenter
           style={{
             flex: "1",
             flexFlow: "column",
             lineHeight: "initial",
             marginBottom: "20px",
+            padding: '50px 0'
           }}
         >
           <div
             style={{
               // color: 'white',
-              fontSize: "20px",
+              fontSize: "35px",
               fontWeight: "bold",
-              marginBottom: "16px",
+              marginBottom: "20px",
               textAlign: "center",
             }}
           >
@@ -175,7 +202,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             <span style={{ color: "#cc3333" }}>어떤 물건</span>이 필요한가요?
           </div>
           <Search
-            style={{ maxWidth: 330 }}
+            style={{ maxWidth: 450 }}
             placeholder="나무젓가락"
             enterButton={<SearchOutlined />}
             size="large"
@@ -191,10 +218,10 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             padding: 24,
             margin: 0,
             minHeight: 280,
-            alignItems: 'center',
+            alignItems: "center",
             // overflow: 'auto',
-            display: 'flex',
-            flexDirection: 'column'
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           {children}

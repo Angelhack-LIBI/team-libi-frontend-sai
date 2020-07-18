@@ -85,21 +85,10 @@ const AddForm: FunctionComponent<any> = () => {
     console.log("Received values of form: ", values);
   };
 
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-
   const onDrop = (picture: any) => {
     console.log('picture', picture)
     setPicture(picture)
   }
-
-  const [autoCompleteResult, setAutoCompleteResult] = useState<any[]>([]);
 
   return (
     <Form
@@ -177,7 +166,7 @@ const AddForm: FunctionComponent<any> = () => {
         <Input type='number' />
       </Form.Item>
       <Form.Item
-        name="minMoney"
+        name="lessSellUnit"
         label="최소 판매 단위"
         rules={[
           {

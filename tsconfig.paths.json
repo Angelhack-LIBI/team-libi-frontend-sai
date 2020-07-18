@@ -10,6 +10,8 @@
       "interface/*": ["interface/*"],
       "utils/*": ["utils/*"],
       "utils": ["utils"],
+      "api": ["api"],
+      "api/*": ["api/*"],
       "images/*": ["images/*"]
     }
   }

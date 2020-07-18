@@ -31,7 +31,7 @@ const RegisterModalButton: FunctionComponent<ILoginModalProps> = (props) => {
       // onOk={handleOk}
       onCancel={hideModal}
     >
-      <RegisterForm /> 
+      <RegisterForm handleOk={handleOk} /> 
     </Modal>
   </>;
 };
