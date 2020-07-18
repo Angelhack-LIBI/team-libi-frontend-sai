@@ -5,13 +5,16 @@ import FlexCenter from "components/FlexCenter";
 import styled from "styled-components";
 import { propsToStyle, formatNumber } from "utils";
 import { useHistory } from "react-router-dom";
+import { configConsumerProps } from "antd/lib/config-provider";
 
 const { Meta } = Card;
 
 interface IItemCardProps {
+  id: number;
   title: string;
   image: string;
-  data: any;
+  type: number;
+  data: DataType[];
 }
 
 interface Props {
@@ -61,13 +64,47 @@ const tagStyle: any = {
   stackdiscount: { backgroundColor: '#339999', color: 'white' }
 }
 
+interface DataType {
+  title: string,
+  content: string,
+  is_focused: boolean
+}
+
 const ItemCard: FunctionComponent<IItemCardProps> = ({
+  id,
   image,
   title,
+  type: shareingType,
   data,
-}) => {
-  const { type = 'groupbuying', id = '1' } = data
+}: IItemCardProps) => {
+  const type = shareingType === 1 ? 'groupbuying' : 'stackdiscount'
+  // const { type = 'groupbuying', id = '1' } = data
   const history = useHistory()
+
+  const attrDom: any[] = data.map(({ title, content, is_focused }) => {
+    return <FlexCenter style={{ flex: "1", flexFlow: "column", padding: '4px' }}>
+      <span>{title}</span>
+      <span style={{ fontSize: "14px", fontWeight: (is_focused ? "bold" : undefined) }}>
+        {content}
+      </span>
+    </FlexCenter>
+  })
+
+  if (shareingType === 1) {
+    attrDom.splice(
+      1,
+      0,
+      <div
+        style={{
+          width: "1px",
+          height: "30px",
+          backgroundColor: "#666",
+        }}
+      />
+    );
+    console.log('attrDom', attrDom)
+  }
+
   return (
     <CardWrapper onClick={() => history.push(`/about/${id}`)}>
       <Card
@@ -87,7 +124,8 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
         </Tag>
         <Meta style={{ padding: 16 }} title={title || "Europe Street beat"} />
         <FlexCenter style={{ backgroundColor: "#eee", padding: 8 }}>
-          {Object.keys(data).includes("hopeMondey") ? (
+          {attrDom}
+          {/* {Object.keys(data).includes("hopeMondey") ? (
             <FlexCenter style={{ flex: "1", flexFlow: "column", padding: '4px' }}>
               <span>희망 금액</span>
               <span style={{ fontSize: "14px", fontWeight: "bold" }}>
@@ -114,7 +152,7 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
                 <span>{`${data?.percent} %`}</span>
               </FlexCenter>
             </>
-          )}
+          )} */}
         </FlexCenter>
       </Card>
     </CardWrapper>

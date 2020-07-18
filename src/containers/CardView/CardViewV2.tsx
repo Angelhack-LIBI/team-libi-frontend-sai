@@ -60,7 +60,7 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
               <b>모든 목록을 조회했습니다</b>
             </p>
           }>
-          <Row gutter={[16, 16]} style={{ margin: 0 }}>
+          {/* <Row gutter={[16, 16]} style={{ margin: 0 }}>
             {items.map((v: any, i: number) => (
               <Col key={i} {...breakPoint}>
                 <ItemCard title={'test'} image={'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'} data={{
@@ -69,7 +69,7 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
                 }} />
               </Col>
             ))}
-          </Row>
+          </Row> */}
         </InfiniteScroll>
       </FlexCenter>
     </DefaultLayout>

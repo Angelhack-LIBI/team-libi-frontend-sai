@@ -25,12 +25,15 @@ import ImageLogo from "components/ImageLogo";
 import styled, { CSSProperties } from "styled-components";
 import FlexCenter from "components/FlexCenter";
 import LoginModalButton from "components/LoginModalButton";
+import searchstate from "state/search";
+import { useRecoilState } from "recoil";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 interface IDefaultLayoutProps {
   haveSearch?: boolean
+  onSearch?: Function
 }
 
 const defaultStyle = {
@@ -106,10 +109,12 @@ const MockButtons: any = ({ index }: any) => (
 );
 
 const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
-  const { children, haveSearch } = props;
+  const { children, haveSearch, onSearch } = props;
   const { formatMessage: fm } = useIntl();
   const { pathname } = useLocation();
   const history = useHistory();
+  
+  const [search, setSearch] = useRecoilState(searchstate);
 
   const pathDom = useMemo(() => {
     const pathArray = pathname.split("/");
@@ -219,9 +224,20 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           <Search
             style={{ maxWidth: 450 }}
             placeholder="나무젓가락"
+            value={search}
             enterButton={<SearchOutlined />}
             size="large"
-            onSearch={(value: string) => console.log(value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              console.log('value', e.target.value)
+              setSearch(e.target.value)
+            }}
+            onSearch={(value: string) => {
+              console.log('value', value)
+              // setSearch(value)
+              if (onSearch) {
+                onSearch(value)
+              }
+            }}
           />
           {/* </FlexCenter> */}
         </FlexCenter>}

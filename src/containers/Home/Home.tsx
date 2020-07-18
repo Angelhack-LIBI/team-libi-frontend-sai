@@ -7,9 +7,15 @@ import FlexCenter from "components/FlexCenter";
 import DefaultLayout from "components/DefaultLayout";
 import { PlusOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
-
+import axiosInstance from "api/AxiosInstance";
+import apiMeta from "api/meta";
+import queryString from 'query-string'
+import searchState from "state/search";
+import { useRecoilValue } from "recoil";
 
 interface ICardViewProps {}
+
+const { baseURL } = apiMeta
 
 const breakPoint = {
   xs: 12,
@@ -18,6 +24,14 @@ const breakPoint = {
   lg: 6,
   xl: 6,
 };
+
+interface Card {
+  id: number,
+  title: string,
+  sharing_type: number,
+  thumbnail_url: string,
+  attributes: any[]
+}
 
 const MenuDom: FunctionComponent<any> = () => {
   const history = useHistory()
@@ -33,38 +47,73 @@ const MenuDom: FunctionComponent<any> = () => {
 };
 
 const Home: FunctionComponent<ICardViewProps> = (props) => {
-  const [items, setItems] = useState<any[]>([]);
+  const [savedKeyword, setSavedKeyword] = useState<string>('')
+  const [items, setItems] = useState<Card[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
+  // const [isSearch, setIsSearch] = useState<boolean>(false);
+  const search = useRecoilValue(searchState)
 
   useEffect(() => {
-    onLoad();
-  }, []);
+    onLoad(search, true);
+  }, [savedKeyword]);
 
-  const onLoad = useCallback(() => {
+  useEffect(() => {
+    if (savedKeyword && search.length === 0) {
+      setSavedKeyword('')
+    }
+  }, [search])
+
+  const onLoad = useCallback(async (keyword: string = '', reset: boolean = false) => {
     if (!loading) {
       console.log('on load')
       setLoading(true);
-      const actuallyLoadMore = (resolve: Function) => {
-        // fake new data
-        let newItems: any[] = [];
-        for (let i = 0, l = 24; i < l; i++) {
-          newItems.push(Math.random() * 100);
-        }
-        setItems(items.concat(newItems));
-        resolve();
-      };
-      new Promise((resolve, reject) => {
-        setTimeout(() => {
-          actuallyLoadMore(resolve);
-          setLoading(false);
-        }, 500);
-      });
+
+      const { length } = items
+
+      const lastId = reset ? 0 : items?.[length - 1]?.id || 0
+      console.log('lastId', lastId)
+
+      const query = {
+        area_id: 1,
+        size: 24,
+        last_id: lastId,
+        keyword: savedKeyword
+      }
+      
+      const sharingList = await axiosInstance.get(`/sharing/?${queryString.stringify(query)}`)
+      console.log('sharingList', sharingList)
+      const { data } = sharingList
+      
+      if (reset) {
+        setItems(data)
+      } else {
+        setItems(items.concat(data))
+      }
+
+      // console.log('getList', getList)
+      setLoading(false);
+      // const actuallyLoadMore = (resolve: Function) => {
+      //   // fake new data
+      //   let newItems: any[] = [];
+      //   for (let i = 0, l = 24; i < l; i++) {
+      //     newItems.push(Math.random() * 100);
+      //   }
+      //   setItems(items.concat(newItems));
+      //   resolve();
+      // };
+      // new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     actuallyLoadMore(resolve);
+      //     setLoading(false);
+      //   }, 500);
+      // });
     }
-  }, [items, setItems, loading, setLoading]);
+  }, [items, setItems, loading, setLoading, savedKeyword]);
 
   return (
-    <DefaultLayout haveSearch={true}>
+    <DefaultLayout haveSearch={true} onSearch={(value: string) => {
+      setSavedKeyword(value)
+    }}>
       <FlexCenter style={{ maxWidth: "1080px" }}>
         <InfiniteScroll
           scrollableTarget={"list"}
@@ -79,20 +128,20 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
           }
         >
           <Row gutter={[16, 16]} style={{ margin: 0 }}>
-            {items.map((v: any, i: number) => (
-              <Col key={i} {...breakPoint}>
-                <ItemCard
-                  title={"test"}
-                  image={
-                    "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                  }
-                  data={{
-                    minMoney: 40000,
-                    percent: 40,
-                  }}
-                />
-              </Col>
-            ))}
+            {items.map((card: Card) => {
+              const { id, title, thumbnail_url, sharing_type, attributes = [] } = card;
+              return (
+                <Col key={id} {...breakPoint}>
+                  <ItemCard
+                    id={id}
+                    title={title}
+                    image={baseURL + thumbnail_url}
+                    type={sharing_type}
+                    data={attributes}
+                  />
+                </Col>
+              );
+            })}
           </Row>
         </InfiniteScroll>
       </FlexCenter>
