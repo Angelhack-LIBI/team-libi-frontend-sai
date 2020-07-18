@@ -4,6 +4,7 @@ import ItemCard from "components/ItemCard";
 // import WaypointListContainer from "components/WaypointListContainer";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FlexCenter from "components/FlexCenter";
+import DefaultLayout from "components/DefaultLayout";
 
 interface ICardViewProps {}
 
@@ -46,30 +47,32 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
   }, [items, setItems, loading, setLoading]);
 
   return (
-    <FlexCenter style={{ maxWidth: '1080px' }}>
-      <InfiniteScroll
-        scrollableTarget={'list'}
-        dataLength={items.length} //This is important field to render the next data
-        next={onLoad}
-        hasMore={true}
-        loader={<Spin />}
-        endMessage={
-          <p style={{textAlign: 'center'}}>
-            <b>Yay! You have seen it all</b>
-          </p>
-        }>
-        <Row gutter={[16, 16]} style={{ margin: 0 }}>
-          {items.map((v: any, i: number) => (
-            <Col key={i} {...breakPoint}>
-              <ItemCard title={'test'} image={'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'} data={{
-                minMoney: 40000,
-                percent: 40
-              }} />
-            </Col>
-          ))}
-        </Row>
-      </InfiniteScroll>
-    </FlexCenter>
+    <DefaultLayout haveSearch={true}>
+      <FlexCenter style={{ maxWidth: '1080px' }}>
+        <InfiniteScroll
+          scrollableTarget={'list'}
+          dataLength={items.length} //This is important field to render the next data
+          next={onLoad}
+          hasMore={true}
+          loader={<Spin />}
+          endMessage={
+            <p style={{textAlign: 'center'}}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }>
+          <Row gutter={[16, 16]} style={{ margin: 0 }}>
+            {items.map((v: any, i: number) => (
+              <Col key={i} {...breakPoint}>
+                <ItemCard title={'test'} image={'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'} data={{
+                  minMoney: 40000,
+                  percent: 40
+                }} />
+              </Col>
+            ))}
+          </Row>
+        </InfiniteScroll>
+      </FlexCenter>
+    </DefaultLayout>
   );
 };
 

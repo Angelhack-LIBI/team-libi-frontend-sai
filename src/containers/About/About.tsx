@@ -1,12 +1,15 @@
 import * as React from 'react';
+import DefaultLayout from 'components/DefaultLayout';
 
 interface IAboutProps {
 }
 
 const About: React.FunctionComponent<IAboutProps> = (props) => {
-  return <div>
-    About
-  </div>;
+  return <DefaultLayout>
+    <div>
+      About
+    </div>
+  </DefaultLayout>
 };
 
 export default About;

@@ -29,7 +29,9 @@ import LoginModalButton from "components/LoginModalButton";
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-interface IDefaultLayoutProps {}
+interface IDefaultLayoutProps {
+  haveSearch?: boolean
+}
 
 const defaultStyle = {
   height: "100%",
@@ -104,7 +106,7 @@ const MockButtons: any = ({ index }: any) => (
 );
 
 const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
-  const { children } = props;
+  const { children, haveSearch } = props;
   const { formatMessage: fm } = useIntl();
   const { pathname } = useLocation();
   const history = useHistory();
@@ -179,7 +181,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           overflow: "auto",
         }}
       >
-        <FlexCenter
+        {haveSearch && <FlexCenter
           style={{
             flex: "1",
             flexFlow: "column",
@@ -209,7 +211,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             onSearch={(value: string) => console.log(value)}
           />
           {/* </FlexCenter> */}
-        </FlexCenter>
+        </FlexCenter>}
         {/* <Layout style={{ padding: "0 24px 24px" }}> */}
         <Breadcrumb style={{ margin: "16px 0" }}>{pathDom}</Breadcrumb>
         <Content

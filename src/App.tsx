@@ -21,9 +21,9 @@ const App: FunctionComponent<any> = () => {
   return (
     <IntlProvider locale={lang} messages={messages[lang]}>
       <Router>
-        <DefaultLayout>
+        {/* <DefaultLayout> */}
           <CommonRouter />
-        </DefaultLayout>
+        {/* </DefaultLayout> */}
       </Router>
     </IntlProvider>
   );
