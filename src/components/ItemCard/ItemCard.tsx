@@ -3,7 +3,7 @@ import React, { FunctionComponent, CSSProperties } from "react";
 import { Card } from "antd";
 import FlexCenter from "components/FlexCenter";
 import styled from "styled-components";
-import { propsToStyle } from "utils";
+import { propsToStyle, formatNumber } from "utils";
 
 const { Meta } = Card;
 
@@ -87,7 +87,7 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
             <FlexCenter style={{ flex: "1", flexFlow: "column" }}>
               <span>희망금액</span>
               <span style={{ fontSize: "14px", fontWeight: "bold" }}>
-                {data?.hopeMoney}
+                {formatNumber(data?.hopeMoney)}
               </span>
             </FlexCenter>
           ) : (
@@ -95,7 +95,7 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
               <FlexCenter style={{ flex: "1", flexFlow: "column" }}>
                 <span>최소 주문금액</span>
                 <span style={{ fontSize: "14px", fontWeight: "bold" }}>
-                  <span>{`${data?.minMoney}`}</span>
+                  <span>{`${formatNumber(data?.minMoney)}`}</span>
                 </span>
               </FlexCenter>
               <div
