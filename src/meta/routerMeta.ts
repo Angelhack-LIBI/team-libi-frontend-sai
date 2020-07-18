@@ -7,6 +7,7 @@ const routerMeta: RouterMetaType = {
   About: '/about',
   Login: '/login',
   Register: '/register',
+  Add: '/add',
   CardView: '/cardview'
 }
 

@@ -8,11 +8,11 @@ import FlexCenter from "components/FlexCenter";
 interface ICardViewProps {}
 
 const breakPoint = {
-  xs: 24,
+  xs: 12,
   sm: 12,
   md: 12,
   lg: 6,
-  xl: 4,
+  xl: 6,
 };
 
 const CardView: FunctionComponent<ICardViewProps> = (props) => {
@@ -45,11 +45,8 @@ const CardView: FunctionComponent<ICardViewProps> = (props) => {
     }
   }, [items, setItems, loading, setLoading]);
 
-  console.log('loading', loading)
-  console.log('items.length', items.length)
-
   return (
-    <FlexCenter style={{ maxWidth: '1440px' }}>
+    <FlexCenter style={{ maxWidth: '1080px' }}>
       <InfiniteScroll
         scrollableTarget={'list'}
         dataLength={items.length} //This is important field to render the next data
