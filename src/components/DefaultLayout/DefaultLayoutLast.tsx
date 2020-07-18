@@ -162,6 +162,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
+              cursor: 'pointer',
               float: 'left'
             }} />
           <Menu

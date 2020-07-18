@@ -86,7 +86,7 @@ const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
         rules={[
           {
             required: true,
-            message: "Please input your password!",
+            message: "비밀번호를 입력해주세요!",
           },
         ]}
         hasFeedback
@@ -101,7 +101,7 @@ const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
         rules={[
           {
             required: true,
-            message: "Please confirm your password!",
+            message: "비밀번호를 입력해주세요!",
           },
           ({ getFieldValue }) => ({
             validator(rule, value) {
@@ -109,7 +109,7 @@ const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
                 return Promise.resolve();
               }
               return Promise.reject(
-                "The two passwords that you entered do not match!"
+                "비밀번호가 매칭되지 않습니다"
               );
             },
           }),

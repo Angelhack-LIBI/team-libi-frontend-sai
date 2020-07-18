@@ -3,19 +3,27 @@ import styled from "styled-components";
 import { propsToStyle, formatNumber } from "utils";
 import FlexCenter from "components/FlexCenter";
 import { Button, Modal } from "antd";
-import React, { useState, useCallback, FunctionComponent } from "react";
+import React, { useState, useCallback, FunctionComponent, useEffect } from "react";
 import ApplyModal from "components/ApplyModal/ApplyModal";
+import { useParams } from "react-router-dom";
+import axiosInstance from "api/AxiosInstance";
+import categoryState, { CategoryType } from "state/category";
+import { useRecoilValue } from "recoil";
+import { title } from "process";
+import { meta } from "api";
 
 interface IAboutProps {
-  title: string;
-  image: string;
-  data: any;
+  // title: string;
+  // image: string;
+  // data: any;
 }
 
 interface Props {
   style?: any
   image?: string
 }
+
+const { baseURL } = meta
 
 const AboutComponent: any = styled.div`
   display: -webkit-flex;
@@ -67,6 +75,7 @@ const ImageDom: any = styled.div`
   background-image: url('${(props: Props) => props.image || ''}');
   background-repeat: no-repeat;
   background-position: center;
+  border: 1px solid #eee;
   /* background-position: 10% 100px; */
 
   ${(props: Props) => propsToStyle(props.style || {})}
@@ -89,7 +98,7 @@ const showContact = (data: any) => {
     title: '판매자 연락처',
     content: (
       <div>
-        {data?.contact || '010-0000-0000'}
+        {`${data?.name ? data?.name + " / " : ''}${data?.phone || '010-0000-0000'}`}
       </div>
     ),
     onOk() {},
@@ -97,13 +106,38 @@ const showContact = (data: any) => {
 }
 
 const About: FunctionComponent<IAboutProps> = (props) => {
-  const {
-    image,
-    title,
-    data = {}
-  } = props;
+  // const {
+  //   image,
+  //   title,
+  //   data = {}
+  // } = props;
 
-  const { type = 'groupbuying', category = "잡화 - 화양동" } = data
+  const { productId } = useParams();
+
+  const [data, setData] = useState<any>({})
+
+  const category = useRecoilValue<CategoryType[]>(categoryState);
+
+  const openContact = useCallback(
+    async () => {
+      const { data } = await axiosInstance.get(`/sharing/${productId}/contact`)
+      showContact(data)
+    },
+    [productId],
+  )
+
+  useEffect(() => {
+    axiosInstance.get(`/sharing/${productId}`)
+      .then(({ data }) => {
+        console.log('data', data)
+        setData(data)
+      })
+    
+  }, [productId])
+
+  const { title, sharing_type = 1, description, category_id, photo_urls = ["https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"] } = data
+
+  const type = sharing_type === 1 ? 'groupbuying' : 'stackdiscount'
 
   const isgroupbuying = type === 'groupbuying'
   
@@ -114,12 +148,12 @@ const About: FunctionComponent<IAboutProps> = (props) => {
   return (
     <DefaultLayout>
       <AboutComponent>
-        <ImageDom image={image || "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"} />
+        <ImageDom image={baseURL + photo_urls[0]} />
         <FlexCenter style={{ width: '100%', padding: '10px' }}>
           <div style={{ flexFlow: 'column', fontWeight: 'bold', fontSize: '18px' }}>
             {title || '고급형 냉장고'}
             <div style={{ color: '#999999', fontSize: '14px' }}>
-              {category}
+              {category.find(v => v.id === category_id)?.title}
             </div>
           </div>
           <Tag style={{ marginLeft: 'auto', ...assignTagStyle }}>
@@ -128,27 +162,27 @@ const About: FunctionComponent<IAboutProps> = (props) => {
         </FlexCenter>
         <FlexCenter style={{ width: '100%', padding: isgroupbuying ? '10px 10px 0px 10px' : '10px', justifyContent: 'flex-start' }}>
           <span style={{ fontSize: "14px", fontWeight: "bold", color: assignTagStyle.backgroundColor }}>
-            {`${formatNumber(data?.hopeMoney || 40000)}원`}
+            {`${Number(data?.goal_price || 0)}원`}
           </span>
           <span style={{ fontSize: '14px', marginLeft: '5px' }}>
-            {`/ ${data?.lessSellUnit || '2000개 1묶음 당'}`}
+            {data?.lessSellUnit ? `/ ${data?.lessSellUnit}` : ''}
           </span>
         </FlexCenter>
         { isgroupbuying && <FlexCenter style={{ width: '100%', padding: '0px 10px 10px 10px', justifyContent: 'flex-start' }}>
             <span style={{ fontSize: "14px", fontWeight: "bold", color: assignTagStyle.backgroundColor }}>
-              {`현재 달성률 ${formatNumber(data?.percent || 17)}%`}
+              {`현재 달성률 ${formatNumber(data?.percent || 0)}%`}
             </span>
             <span style={{ fontSize: '14px', marginLeft: '5px' }}>
-              {`/ 목표금액 ${formatNumber(data?.planMoney || 1000)}원`}
+              {`/ 목표금액 ${formatNumber(Number(data?.goal_price || 0))}원`}
             </span>
           </FlexCenter>
         }
         <FlexCenter style={{ width: '100%', padding: '10px', justifyContent: 'flex-start', borderTop: '1px solid #eee' }}>
-          {data?.detail || '쌸랴쌸라'}
+          {description}
         </FlexCenter>
         <FlexCenter style={{ width: '100%', padding: '10px' }}>
           <Button style={{ width: 'auto', backgroundColor: assignTagStyle.backgroundColor, borderColor: assignTagStyle.backgroundColor }} type="primary" htmlType="submit" onClick={
-            () => isgroupbuying ? setApplyModalVisible(true) : showContact(data)
+            () => isgroupbuying ? setApplyModalVisible(true) : openContact()
           }>
             {isgroupbuying ? '공동구매 참여하기' : '연락하기'}
           </Button>

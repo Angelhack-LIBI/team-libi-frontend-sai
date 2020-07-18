@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, CSSProperties } from "react";
+import React, { useState, FunctionComponent, CSSProperties, useCallback } from "react";
 import {
   Form,
   Input,
@@ -10,6 +10,7 @@ import {
   Checkbox,
   Button,
   AutoComplete,
+  Modal,
 } from "antd";
 import { QuestionCircleOutlined, CloseOutlined } from "@ant-design/icons";
 
@@ -17,45 +18,13 @@ import ImageUploader from 'react-images-upload';
 import { propsToStyle } from "utils";
 import styled from "styled-components";
 import FlexCenter from "components/FlexCenter";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import categoryState, { CategoryType } from "state/category";
+import axiosInstance from "api/AxiosInstance";
 
 const { Option } = Select;
 // const AutoCompleteOption = AutoComplete.Option;
-
-const residences = [
-  {
-    value: "zhejiang",
-    label: "Zhejiang",
-    children: [
-      {
-        value: "hangzhou",
-        label: "Hangzhou",
-        children: [
-          {
-            value: "xihu",
-            label: "West Lake",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "jiangsu",
-    label: "Jiangsu",
-    children: [
-      {
-        value: "nanjing",
-        label: "Nanjing",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "Zhong Hua Men",
-          },
-        ],
-      },
-    ],
-  },
-];
 
 const formItemLayout = {
   labelCol: {
@@ -65,18 +34,6 @@ const formItemLayout = {
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 16 },
-  },
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
   },
 };
 
@@ -123,15 +80,46 @@ const AddFormWrapper: any = styled.div`
   ${(props: AddProps) => propsToStyle(props.style || {})}
 `
 
+const errorModal = (err: any) => {
+  Modal.error({
+    title: '등록 실패',
+    content: err
+  });
+}
+
 const AddForm: FunctionComponent<any> = () => {
-  let { type = 'groupbuying' } = useParams();
+  const { type: sharing_type = 1 } = useParams();
+  const type = sharing_type === 1 ? 'groupbuying' : 'stackdiscount'
+
+  const history = useHistory()
+
+  const category = useRecoilValue<CategoryType[]>(categoryState);
 
   const [form] = Form.useForm();
   const [picture, setPicture] = useState<any>([])
 
-  const onFinish = (values: any) => {
-    console.log("Received va lues of form: ", values);
-  };
+  const onFinish = useCallback((values: any) => {
+    const assignValue = { ...values, sharing_type }
+    console.log("Received va lues of form: ", assignValue);
+    const formData = new FormData();
+    Object.keys(assignValue).map(key => {
+      const value = assignValue[key]
+      formData.append(key, value)
+    })
+
+    axiosInstance.post('/sharing/', formData, {
+      headers: {'Content-Type': 'multipart/form-data'}
+    }).then((post: any) => {
+      console.log('post', post)
+      Modal.success({
+        content: '등록이 완료되었습니다',
+      });
+      history.goBack()
+    }).catch((err) => {
+      console.log('err', err)
+      errorModal(err)
+    })
+  }, [sharing_type]);
 
   const onDrop = (picture: any) => {
     console.log('picture', picture)
@@ -148,40 +136,43 @@ const AddForm: FunctionComponent<any> = () => {
         scrollToFirstError
       >
         <Form.Item
-          name="productName"
+          name="title"
           label="상품이름"
           rules={[
             {
               required: true,
-              message: "Please input product name!",
+              message: "상품이름을 입력해주세요",
             },
           ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          name="productType"
+          name="area_id"
+          label="지역코드"
+          initialValue={1}
+          rules={[
+            {
+              required: true,
+              message: "지역코드를 입력해주세요",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="category_id"
           label="상품타입"
           hasFeedback
-          rules={[{ required: true, message: '상품타입을 입력해주세요!' }]}
+          rules={[{ required: true, message: '상품타입을 입력해주세요' }]}
         >
           <Select placeholder="상품타입">
-            <Option value="china">China</Option>
-            <Option value="usa">U.S.A</Option>
-            <Option value="usa2">U.S.A1</Option>
-            <Option value="usa1">U.S.A2</Option>
+            {category.map(({ id, title }) => <Option value={id}>{title}</Option>)}
           </Select>
         </Form.Item>
         <Form.Item
-          name="productImage"
+          name="photo"
           label={"상품이미지"}
-          // rules={[
-          //   {
-          //     required: false,
-          //     message: "Please 업로드 상품 이미지",
-          //     whitespace: true,
-          //   },
-          // ]}
         >
           {picture.length > 0 ? (
             <FlexCenter>
@@ -191,7 +182,7 @@ const AddForm: FunctionComponent<any> = () => {
           ) : (
             <ImageUploader
               withIcon={true}
-              buttonText='Choose images'
+              buttonText='사진 선택'
               onChange={onDrop}
               imgExtension={['.jpg', '.gif', '.png', '.gif']}
               maxFileSize={5242880}
@@ -199,7 +190,7 @@ const AddForm: FunctionComponent<any> = () => {
           )}
         </Form.Item>
         { type === "groupbuying" && <Form.Item
-          name="planMoney"
+          name="goal_price"
           label="목표금액 (원)"
           rules={[
             {
@@ -211,7 +202,7 @@ const AddForm: FunctionComponent<any> = () => {
           <Input type='number' />
         </Form.Item> }
         <Form.Item
-          name="lessSellUnit"
+          name="option_description"
           label="최소 판매 단위"
           rules={[
             {
@@ -223,7 +214,7 @@ const AddForm: FunctionComponent<any> = () => {
           <Input placeholder="2000개 1묶음" />
         </Form.Item>
         <Form.Item
-          name="minMoney"
+          name="option_price"
           label="단위당 금액 (원)"
           rules={[
             {
@@ -235,7 +226,7 @@ const AddForm: FunctionComponent<any> = () => {
           <Input type='number' />
         </Form.Item>
         
-        <Form.Item name={'detail'} label="상품에 대한 설명"
+        <Form.Item name={'description'} label="상품에 대한 설명"
           rules={[
             {
               required: true

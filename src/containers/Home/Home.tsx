@@ -37,10 +37,10 @@ const MenuDom: FunctionComponent<any> = () => {
   const history = useHistory()
 
   return <Menu>
-    <Menu.Item onClick={() => history.push('/add/groupbuying')}>
+    <Menu.Item onClick={() => history.push('/add/1')}>
       공동구매 상품 추가
     </Menu.Item>
-    <Menu.Item onClick={() => history.push('/add/stackdiscount')}>
+    <Menu.Item onClick={() => history.push('/add/2')}>
       재고판매 상품 추가
     </Menu.Item>
   </Menu>

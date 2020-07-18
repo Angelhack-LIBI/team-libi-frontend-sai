@@ -1,30 +1,57 @@
-import React, { FunctionComponent, useState, ChangeEvent, useCallback } from 'react';
+import React, { FunctionComponent, useState, ChangeEvent, useCallback, useEffect } from 'react';
 import { Modal, Input, Button } from 'antd';
 import FlexCenter from 'components/FlexCenter';
+import { useParams } from 'react-router-dom';
+import axiosInstance from 'api/AxiosInstance';
 
 interface IApplyModalProps {
   visible: boolean
   data: any
-  handleCancel: ((e: React.MouseEvent<HTMLElement, MouseEvent>) => void) | undefined
+  handleCancel: Function
 }
 
 const ApplyModal: FunctionComponent<IApplyModalProps> = (props) => {
   const { visible, data, handleCancel } = props
   
+  const { productId } = useParams();
+  const [contact, setContact] = useState<any>({})
+
+  useEffect(() => {
+    axiosInstance.get(`/sharing/${productId}/contact`)
+      .then(({ data }) => {
+        console.log('data', data)
+        setContact(data)
+      })
+  }, [productId])
+  
   const [count, setCount] = useState<any>(undefined)
 
   const asyncFunction = useCallback(
-    () => {
-      console.log('dd')
+    async () => {
+      if (count && count > 0) {
+
+        const { data } = await axiosInstance.post(`/sharing/${productId}/apply`, { number: count })
+        Modal.success({
+          content: '성공적으로 참여했습니다.',
+        });
+
+        if (handleCancel) {
+          handleCancel()
+        }
+      } else {
+        Modal.error({
+          content: '갯수를 1 이상으로 선택해 주세요.'
+        });
+      }
     },
-    [count]
+    [count, handleCancel]
   )
 
   return <Modal
     title="공동구매 참여"
     visible={visible}
     footer={null}
-    onCancel={handleCancel}
+    onCancel={handleCancel as any}
   >
     <Input value={count} onChange={(e: ChangeEvent<HTMLInputElement>) => {
       setCount(Number(e.target.value))
@@ -36,7 +63,7 @@ const ApplyModal: FunctionComponent<IApplyModalProps> = (props) => {
       <div style={{ fontWeight: 'bold', fontSize: '20px', marginTop: '30px' }}>
         판매자 연락처
       </div>
-      {data?.contact || '010-0000-0000'}
+      {contact?.phone || '010-0000-0000'}
     </FlexCenter>
   </Modal>;
 };
