@@ -77,7 +77,13 @@ const tailFormItemLayout = {
   },
 };
 
-const AddForm: FunctionComponent<any> = () => {
+interface AddProps {
+  type: 'groupBuying' | 'stackDiscount'
+}
+
+const AddForm: FunctionComponent<AddProps> = (props) => {
+  const { type } = props
+
   const [form] = Form.useForm();
   const [picture, setPicture] = useState<any>([])
 

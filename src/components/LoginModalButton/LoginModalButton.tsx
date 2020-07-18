@@ -50,7 +50,9 @@ const LoginModalButton: FunctionComponent<ILoginModalProps> = (props) => {
     {
       (token || '').length > 0 ? <FlexCenter>
         {`${account?.name}님 안녕하세요`}
-        <Button type="primary" onClick={() => { onDrop() }} icon={<CloseOutlined />} size={'small'} />
+        <Button type="primary" onClick={() => { onDrop() }} size={'small'}>
+          <CloseOutlined />
+        </Button>
       </FlexCenter> : (
         <Button type="primary" onClick={showModal}>
           Login

@@ -1,9 +1,10 @@
-import * as React from "react";
 import DefaultLayout from "components/DefaultLayout";
 import styled from "styled-components";
 import { propsToStyle, formatNumber } from "utils";
 import FlexCenter from "components/FlexCenter";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
+import React, { useState, useCallback, FunctionComponent } from "react";
+import ApplyModal from "components/ApplyModal/ApplyModal";
 
 interface IAboutProps {
   title: string;
@@ -83,7 +84,19 @@ const Tag: any = styled.div`
   ${(props: Props) => propsToStyle(props.style || {})}
 `;
 
-const About: React.FunctionComponent<IAboutProps> = (props) => {
+const showContact = (data: any) => {
+  Modal.info({
+    title: '판매자 연락처',
+    content: (
+      <div>
+        {data?.contact || '010-0000-0000'}
+      </div>
+    ),
+    onOk() {},
+  });
+}
+
+const About: FunctionComponent<IAboutProps> = (props) => {
   const {
     image,
     title,
@@ -95,6 +108,8 @@ const About: React.FunctionComponent<IAboutProps> = (props) => {
   const isGroupBuying = type === 'groupBuying'
   
   const assignTagStyle = tagStyle[type]
+
+  const [applyModalVisible, setApplyModalVisible] = useState<boolean>(false)
 
   return (
     <DefaultLayout>
@@ -132,11 +147,14 @@ const About: React.FunctionComponent<IAboutProps> = (props) => {
           {data?.detail || '쌸랴쌸라'}
         </FlexCenter>
         <FlexCenter style={{ width: '100%', padding: '10px' }}>
-          <Button style={{ width: 'auto', backgroundColor: assignTagStyle.backgroundColor, borderColor: assignTagStyle.backgroundColor }} type="primary" htmlType="submit">
+          <Button style={{ width: 'auto', backgroundColor: assignTagStyle.backgroundColor, borderColor: assignTagStyle.backgroundColor }} type="primary" htmlType="submit" onClick={
+            () => isGroupBuying ? setApplyModalVisible(true) : showContact(data)
+          }>
             {isGroupBuying ? '공동구매 참여하기' : '연락하기'}
           </Button>
         </FlexCenter>
       </AboutComponent>
+      <ApplyModal visible={applyModalVisible} data={data} handleCancel={() => setApplyModalVisible(false)} />
     </DefaultLayout>
   );
 };
