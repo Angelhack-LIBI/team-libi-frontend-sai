@@ -7,7 +7,7 @@ const routerMeta: RouterMetaType = {
   About: '/about/:productId',
   Login: '/login',
   Register: '/register',
-  Add: '/add',
+  Add: '/add/:type',
   CardView: '/cardview'
 }
 

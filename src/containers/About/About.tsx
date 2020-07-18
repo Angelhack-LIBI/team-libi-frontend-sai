@@ -73,8 +73,8 @@ const ImageDom: any = styled.div`
 `;
 
 const tagStyle: any = {
-  groupBuying: { backgroundColor: '#cc3333', color: 'white' },
-  stackDiscount: { backgroundColor: '#339999', color: 'white' }
+  groupbuying: { backgroundColor: '#cc3333', color: 'white' },
+  stackdiscount: { backgroundColor: '#339999', color: 'white' }
 }
 
 const Tag: any = styled.div`
@@ -103,9 +103,9 @@ const About: FunctionComponent<IAboutProps> = (props) => {
     data = {}
   } = props;
 
-  const { type = 'groupBuying', category = "잡화 - 화양동" } = data
+  const { type = 'groupbuying', category = "잡화 - 화양동" } = data
 
-  const isGroupBuying = type === 'groupBuying'
+  const isgroupbuying = type === 'groupbuying'
   
   const assignTagStyle = tagStyle[type]
 
@@ -123,10 +123,10 @@ const About: FunctionComponent<IAboutProps> = (props) => {
             </div>
           </div>
           <Tag style={{ marginLeft: 'auto', ...assignTagStyle }}>
-            {isGroupBuying ? '공동구매' : '재고할인'}
+            {isgroupbuying ? '공동구매' : '재고할인'}
           </Tag>
         </FlexCenter>
-        <FlexCenter style={{ width: '100%', padding: isGroupBuying ? '10px 10px 0px 10px' : '10px', justifyContent: 'flex-start' }}>
+        <FlexCenter style={{ width: '100%', padding: isgroupbuying ? '10px 10px 0px 10px' : '10px', justifyContent: 'flex-start' }}>
           <span style={{ fontSize: "14px", fontWeight: "bold", color: assignTagStyle.backgroundColor }}>
             {`${formatNumber(data?.hopeMoney || 40000)}원`}
           </span>
@@ -134,7 +134,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
             {`/ ${data?.lessSellUnit || '2000개 1묶음 당'}`}
           </span>
         </FlexCenter>
-        { isGroupBuying && <FlexCenter style={{ width: '100%', padding: '0px 10px 10px 10px', justifyContent: 'flex-start' }}>
+        { isgroupbuying && <FlexCenter style={{ width: '100%', padding: '0px 10px 10px 10px', justifyContent: 'flex-start' }}>
             <span style={{ fontSize: "14px", fontWeight: "bold", color: assignTagStyle.backgroundColor }}>
               {`현재 달성률 ${formatNumber(data?.percent || 17)}%`}
             </span>
@@ -148,9 +148,9 @@ const About: FunctionComponent<IAboutProps> = (props) => {
         </FlexCenter>
         <FlexCenter style={{ width: '100%', padding: '10px' }}>
           <Button style={{ width: 'auto', backgroundColor: assignTagStyle.backgroundColor, borderColor: assignTagStyle.backgroundColor }} type="primary" htmlType="submit" onClick={
-            () => isGroupBuying ? setApplyModalVisible(true) : showContact(data)
+            () => isgroupbuying ? setApplyModalVisible(true) : showContact(data)
           }>
-            {isGroupBuying ? '공동구매 참여하기' : '연락하기'}
+            {isgroupbuying ? '공동구매 참여하기' : '연락하기'}
           </Button>
         </FlexCenter>
       </AboutComponent>
