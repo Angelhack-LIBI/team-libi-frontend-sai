@@ -85,9 +85,9 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
         <FlexCenter style={{ backgroundColor: "#999", padding: 8 }}>
           {Object.keys(data).includes("hopeMondey") ? (
             <FlexCenter style={{ flex: "1", flexFlow: "column" }}>
-              <span>희망금액</span>
+              <span>희망 금액</span>
               <span style={{ fontSize: "14px", fontWeight: "bold" }}>
-                {formatNumber(data?.hopeMoney)}
+                {formatNumber(data?.hopeMoney)} 원
               </span>
             </FlexCenter>
           ) : (
