@@ -241,7 +241,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             }}
           />
           {location && <FlexCenter style={{ marginTop: '20px', color: '#999', fontWeight: 'bold' }}>
-            <EnvironmentFilled style={{ marginRight: '5px' }} />{`${location.name}`}
+            <EnvironmentFilled style={{ marginRight: '5px' }} />{`${location.name || '위치 확인중...'}`}
           </FlexCenter>}
           {/* </FlexCenter> */}
         </FlexCenter>}

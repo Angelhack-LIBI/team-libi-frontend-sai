@@ -1,5 +1,7 @@
 # LIBI Front
 
+![](https://img.shields.io/github/v/release/Angelhack-LIBI/team-libi-frontend-sai) ![](https://img.shields.io/badge/license-MIT-green) ![](https://img.shields.io/docker/cloud/build/dongho1596/libi-front) ![](https://img.shields.io/docker/image-size/dongho1596/libi-front/latest)
+
 [![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/Angelhack-LIBI/Inventory-Handling-Service-Front)
 
 ## 엔젤핵 서울 2020 해커톤 LIBI팀 프론트엔드 프로젝트 
