@@ -10,9 +10,7 @@ import { useIntl } from "react-intl";
 import { routerMeta } from "meta";
 
 import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
+  ShopOutlined,
   SearchOutlined,
   RadarChartOutlined,
 } from "@ant-design/icons";
@@ -25,8 +23,9 @@ import ImageLogo from "components/ImageLogo";
 import styled, { CSSProperties } from "styled-components";
 import FlexCenter from "components/FlexCenter";
 import LoginModalButton from "components/LoginModalButton";
-import searchstate from "state/search";
-import { useRecoilState } from "recoil";
+import searchState from "state/search";
+import { useRecoilState, useRecoilValue } from "recoil";
+import locationState from "state/location";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -114,15 +113,16 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
   const { pathname } = useLocation();
   const history = useHistory();
   
-  const [search, setSearch] = useRecoilState(searchstate);
+  const [search, setSearch] = useRecoilState(searchState);
+  const location = useRecoilValue(locationState);
 
-  const pathDom = useMemo(() => {
-    const pathArray = pathname.split("/");
-    const emptyToSpace = (text: string) => (text === "" ? " " : text);
-    return pathArray.map((path) => (
-      <Breadcrumb.Item key={path}>{emptyToSpace(path)}</Breadcrumb.Item>
-    ));
-  }, [pathname]);
+  // const pathDom = useMemo(() => {
+  //   const pathArray = pathname.split("/");
+  //   const emptyToSpace = (text: string) => (text === "" ? " " : text);
+  //   return pathArray.map((path) => (
+  //     <Breadcrumb.Item key={path}>{emptyToSpace(path)}</Breadcrumb.Item>
+  //   ));
+  // }, [pathname]);
 
   const handleRouteClick = useCallback(
     ({ key }: any) => {
@@ -240,6 +240,9 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
               }
             }}
           />
+          {location && <FlexCenter style={{ marginTop: '20px', color: '#999', fontWeight: 'bold' }}>
+            <ShopOutlined style={{ marginRight: '5px' }} />{`${location.name}`}
+          </FlexCenter>}
           {/* </FlexCenter> */}
         </FlexCenter>}
         {/* <Layout style={{ padding: "0 24px 24px" }}> */}
