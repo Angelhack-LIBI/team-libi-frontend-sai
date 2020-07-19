@@ -121,7 +121,7 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
         <Tag style={tagStyle[type]}>
           {type === 'groupbuying' ? '공동구매' : '재고할인'}
         </Tag>
-        <Meta style={{ padding: 16 }} title={title || "Europe Street beat"} />
+        <Meta style={{ padding: 16 }} title={<b>{title || "Europe Street beat"}</b>} />
         <FlexCenter style={{ backgroundColor: "#eee", padding: 8 }}>
           {attrDom}
           {/* {Object.keys(data).includes("hopeMondey") ? (

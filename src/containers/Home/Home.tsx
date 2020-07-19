@@ -1,9 +1,8 @@
-import React, { FunctionComponent, useMemo, useEffect, useState, useCallback } from "react";
+import React, { FunctionComponent, useMemo, useEffect, useState, useCallback, CSSProperties } from "react";
 import { Layout, Row, Col, Grid, Spin, Button, Dropdown, Menu } from "antd";
 import ItemCard from "components/ItemCard";
 // import WaypointListContainer from "components/WaypointListContainer";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import FlexCenter from "components/FlexCenter";
 import DefaultLayout from "components/DefaultLayout";
 import { PlusOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
@@ -12,6 +11,8 @@ import apiMeta from "api/meta";
 import queryString from 'query-string'
 import searchState from "state/search";
 import { useRecoilValue } from "recoil";
+import { propsToStyle } from "utils";
+import styled from "styled-components";
 
 interface ICardViewProps {}
 
@@ -33,6 +34,8 @@ interface Card {
   attributes: any[]
 }
 
+const size = 24
+
 const MenuDom: FunctionComponent<any> = () => {
   const history = useHistory()
 
@@ -46,10 +49,36 @@ const MenuDom: FunctionComponent<any> = () => {
   </Menu>
 };
 
+interface Props {
+  style?: CSSProperties
+}
+
+const InfinityScrollWrapper: any = styled.div`
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+
+  & > div {
+    width: 100%;
+  }
+  
+  ${(props: Props) => propsToStyle(props.style || {})}
+`
+
+
 const Home: FunctionComponent<ICardViewProps> = (props) => {
   const [savedKeyword, setSavedKeyword] = useState<string>('')
   const [items, setItems] = useState<Card[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isLast, setIsLast] = useState<boolean>(false)
   // const [isSearch, setIsSearch] = useState<boolean>(false);
   const search = useRecoilValue(searchState)
 
@@ -75,7 +104,7 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
 
       const query = {
         area_id: 1,
-        size: 24,
+        size,
         last_id: lastId,
         keyword: savedKeyword
       }
@@ -84,6 +113,10 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
       console.log('sharingList', sharingList)
       const { data } = sharingList
       
+      if (data.length < size) {
+        setIsLast(true)
+      } 
+
       if (reset) {
         setItems(data)
       } else {
@@ -114,16 +147,16 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
     <DefaultLayout haveSearch={true} onSearch={(value: string) => {
       setSavedKeyword(value)
     }}>
-      <FlexCenter style={{ maxWidth: "1080px" }}>
+      <InfinityScrollWrapper style={{ maxWidth: "1080px", width: '100%' }}>
         <InfiniteScroll
           scrollableTarget={"list"}
           dataLength={items.length} //This is important field to render the next data
           next={onLoad}
-          hasMore={true}
+          hasMore={!isLast}
           loader={<Spin />}
           endMessage={
             <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
+              <b>모든 정보를 조회했습니다.</b>
             </p>
           }
         >
@@ -144,7 +177,7 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
             })}
           </Row>
         </InfiniteScroll>
-      </FlexCenter>
+      </InfinityScrollWrapper>
       <div style={{ position: "fixed", bottom: "20px", right: "20px" }}>
         <Dropdown overlay={<MenuDom />} placement="topRight" arrow>
           <Button
