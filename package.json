@@ -1,6 +1,6 @@
 {
-  "name": "inventory-handling-service-front",
-  "version": "0.1.0",
+  "name": "team-libi-frontend-sai",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@craco/craco": "^5.6.4",
