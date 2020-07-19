@@ -181,7 +181,7 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
         </InfiniteScroll>
       </InfinityScrollWrapper>
       {account?.id && <div style={{ position: "fixed", bottom: "20px", right: "20px" }}>
-        <Dropdown overlay={<MenuDom />} trigger={'click'} placement="topRight" arrow>
+        <Dropdown overlay={<MenuDom />} trigger={['click']} placement="topRight" arrow>
           <Button
             type="primary"
             shape="circle"
