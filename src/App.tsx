@@ -50,6 +50,11 @@ const App: FunctionComponent<any> = () => {
       navigator.geolocation.getCurrentPosition(success, () => {}, locationOptions);
     }
 
+    axiosInstance.get('/sharing/category')
+      .then(({ data }) => {
+        setCategory(data)
+      })
+
     return () => {
       setCategory([])
       setLocation({})
