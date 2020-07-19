@@ -212,7 +212,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           <div
             style={{
               // color: 'white',
-              fontSize: "35px",
+              fontSize: "1.7rem",
               fontWeight: "bold",
               marginBottom: "20px",
               textAlign: "center"
