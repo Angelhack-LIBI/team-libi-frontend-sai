@@ -10,7 +10,7 @@ import axiosInstance from "api/AxiosInstance";
 import apiMeta from "api/meta";
 import queryString from 'query-string'
 import searchState from "state/search";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { propsToStyle } from "utils";
 import styled from "styled-components";
 import accountState from "state/account";
@@ -82,7 +82,13 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isLast, setIsLast] = useState<boolean>(false)
   // const [isSearch, setIsSearch] = useState<boolean>(false);
-  const search = useRecoilValue(searchState)
+  const [search, setSearch] = useRecoilState(searchState)
+
+  useEffect(() => {
+    return () => {
+      setSearch('')
+    }
+  }, [])
 
   useEffect(() => {
     onLoad(search, true);
@@ -149,7 +155,7 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
     <DefaultLayout haveSearch={true} onSearch={(value: string) => {
       setSavedKeyword(value)
     }}>
-      <InfinityScrollWrapper style={{ maxWidth: "1080px", width: '100%' }}>
+      <InfinityScrollWrapper style={{ maxWidth: "1080px", width: '100%', borderTop: '1px solid #eee', paddingTop: '20px' }}>
         <InfiniteScroll
           scrollableTarget={"list"}
           dataLength={items.length} //This is important field to render the next data
