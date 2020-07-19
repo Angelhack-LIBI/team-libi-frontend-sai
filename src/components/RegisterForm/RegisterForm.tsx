@@ -11,6 +11,7 @@ import {
   Button,
   AutoComplete,
   Modal,
+  message,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import axiosInstance from "api/AxiosInstance";
@@ -37,15 +38,18 @@ const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
-    console.log("Received values of form: ", values);
-    const data = await axiosInstance.post("/account/", values)
-    console.log('data', data)
-    
-    success()
-    if (handleOk) {
-      handleOk()
+    try {
+      console.log("Received values of form: ", values);
+      const data = await axiosInstance.post("/account/", values)
+      console.log('data', data)
+      
+      success()
+      if (handleOk) {
+        handleOk()
+      } 
+    } catch ({ response }) {
+      message.error(response?.data?.detail);
     }
-
   };
 
   return (
@@ -70,11 +74,11 @@ const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
       </Form.Item>
       <Form.Item
         name="phone"
-        label="휴대폰번호"
+        label="휴대전화번호"
         rules={[
           {
             required: true,
-            message: "휴대폰 번호를 입력해주세요!",
+            message: "휴대전화번호를 입력해주세요!",
           }
         ]}
       >
@@ -82,7 +86,7 @@ const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
       </Form.Item>
       <Form.Item
         name="password"
-        label="Password"
+        label="비밀번호"
         rules={[
           {
             required: true,
@@ -95,13 +99,13 @@ const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
       </Form.Item>
       <Form.Item
         name="confirm"
-        label="Confirm Password"
+        label="비밀번호 확인"
         dependencies={["password"]}
         hasFeedback
         rules={[
           {
             required: true,
-            message: "비밀번호를 입력해주세요!",
+            message: "비밀번호와 동일하게 입력해주세요!",
           },
           ({ getFieldValue }) => ({
             validator(rule, value) {
@@ -119,7 +123,7 @@ const RegistrationForm: FunctionComponent<any> = ({ handleOk }) => {
       </Form.Item>
       <Form.Item {...{ wrapperCol: { span: 24 }}}>
         <Button style={{ width: '100%' }} type="primary" htmlType="submit">
-          Register
+          회원가입
         </Button>
       </Form.Item>
     </Form>

@@ -13,6 +13,7 @@ import searchState from "state/search";
 import { useRecoilValue } from "recoil";
 import { propsToStyle } from "utils";
 import styled from "styled-components";
+import accountState from "state/account";
 
 interface ICardViewProps {}
 
@@ -41,10 +42,10 @@ const MenuDom: FunctionComponent<any> = () => {
 
   return <Menu>
     <Menu.Item onClick={() => history.push('/add/1')}>
-      공동구매 상품 추가
+      공동구매 상품등록
     </Menu.Item>
     <Menu.Item onClick={() => history.push('/add/2')}>
-      재고판매 상품 추가
+      재고판매 상품등록
     </Menu.Item>
   </Menu>
 };
@@ -76,6 +77,7 @@ const InfinityScrollWrapper: any = styled.div`
 
 const Home: FunctionComponent<ICardViewProps> = (props) => {
   const [savedKeyword, setSavedKeyword] = useState<string>('')
+  const account = useRecoilValue(accountState);
   const [items, setItems] = useState<Card[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [isLast, setIsLast] = useState<boolean>(false)
@@ -178,7 +180,7 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
           </Row>
         </InfiniteScroll>
       </InfinityScrollWrapper>
-      <div style={{ position: "fixed", bottom: "20px", right: "20px" }}>
+      {account?.id && <div style={{ position: "fixed", bottom: "20px", right: "20px" }}>
         <Dropdown overlay={<MenuDom />} placement="topRight" arrow>
           <Button
             type="primary"
@@ -188,7 +190,7 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
           />
         </Dropdown>
         {/* {onClick={() => history.push('/add/')}} */}
-      </div>
+      </div>}
     </DefaultLayout>
   );
 };

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useCallback } from "react";
 
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import RegisterModalButton from "components/RegisterModalButton";
 import FlexCenter from "components/FlexCenter";
 import axiosInstance from "api/AxiosInstance";
@@ -26,13 +26,17 @@ const LoginForm: FunctionComponent<ILoginFormProps> = ({ handleOk }) => {
 
   const onFinish = useCallback(async (values: any) => {
     console.log("Success:", values);
-    const { data } = await axiosInstance.post('/account/token', values)
-    console.log('data', data)
-    const { access_token: token } = data
-    setToken(token)
-    localStorage.setItem('libi_token', token);
-    if (handleOk) {
-      handleOk()
+    try {
+      const { data } = await axiosInstance.post('/account/token', values)
+      console.log('data', data)
+      const { access_token: token } = data
+      setToken(token)
+      localStorage.setItem('libi_token', token);
+      if (handleOk) {
+        handleOk()
+      }
+    } catch({ response }) {
+      message.error(response?.data?.detail);
     }
   }, []);
 
@@ -49,15 +53,15 @@ const LoginForm: FunctionComponent<ILoginFormProps> = ({ handleOk }) => {
       onFinishFailed={onFinishFailed}
     >
       <Form.Item
-        label="휴대폰번호"
+        label="휴대전화번호"
         name="phone"
-        rules={[{ required: true, message: "휴대폰번호를 입력해주세요" }]}
+        rules={[{ required: true, message: "휴대전화번호를 입력해주세요" }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label="Password"
+        label="비밀번호"
         name="password"
         rules={[{ required: true, message: "비밀번호를 입력해주세요" }]}
       >
@@ -70,7 +74,7 @@ const LoginForm: FunctionComponent<ILoginFormProps> = ({ handleOk }) => {
 
       <Form.Item {...{ wrapperCol: { span: 24 }}}>
         <Button style={{ width: '100%' }} type="primary" htmlType="submit">
-          Submit
+          로그인
         </Button>
       </Form.Item>
 

@@ -11,6 +11,7 @@ import {
   Button,
   AutoComplete,
   Modal,
+  message,
 } from "antd";
 import { QuestionCircleOutlined, CloseOutlined } from "@ant-design/icons";
 
@@ -132,9 +133,8 @@ const AddForm: FunctionComponent<any> = () => {
         content: '등록이 완료되었습니다',
       });
       history.goBack()
-    }).catch((err) => {
-      console.log('err', err)
-      errorModal(err)
+    }).catch(({ response }) => {
+      message.error(response?.data?.detail);
     })
   }, [sharing_type]);
 
@@ -178,11 +178,11 @@ const AddForm: FunctionComponent<any> = () => {
         </Form.Item> */}
         <Form.Item
           name="category_id"
-          label="상품타입"
+          label="상품분류"
           hasFeedback
           rules={[{ required: true, message: '상품타입을 입력해주세요' }]}
         >
-          <Select placeholder="상품타입">
+          <Select placeholder="상품분류">
             {category.map(({ id, title }) => <Option value={id}>{title}</Option>)}
           </Select>
         </Form.Item>
@@ -207,7 +207,7 @@ const AddForm: FunctionComponent<any> = () => {
         </Form.Item>
         { type === "groupbuying" && <Form.Item
           name="goal_price"
-          label="목표금액 (원)"
+          label="공동구매 목표금액 (원)"
           rules={[
             {
               required: true,
