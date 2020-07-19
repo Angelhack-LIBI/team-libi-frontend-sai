@@ -133,13 +133,18 @@ const About: FunctionComponent<IAboutProps> = (props) => {
     [productId],
   )
 
+  const getData = useCallback(
+    () => {
+      axiosInstance.get(`/sharing/${productId}`)
+        .then(({ data }) => {
+          console.log('data', data)
+          setData(data)
+        })
+    }, [productId]
+  )
+
   useEffect(() => {
-    axiosInstance.get(`/sharing/${productId}`)
-      .then(({ data }) => {
-        console.log('data', data)
-        setData(data)
-      })
-    
+    getData()
   }, [productId])
 
   const { title, sharing_type = 1, description, category_id, photo_urls = [""] } = data
@@ -199,7 +204,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
           </Button>
         </FlexCenter>}
       </AboutComponent>
-      <ApplyModal visible={applyModalVisible} data={data} handleCancel={() => setApplyModalVisible(false)} />
+      <ApplyModal visible={applyModalVisible} handleCancel={() => setApplyModalVisible(false)} handleApply={() => getData()} />
       <LoginModal visible={visibleLogin} hideModal={() => setVisibleLogin(false)} />
     </DefaultLayout>
   );

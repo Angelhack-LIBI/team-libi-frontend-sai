@@ -6,12 +6,12 @@ import axiosInstance from 'api/AxiosInstance';
 
 interface IApplyModalProps {
   visible: boolean
-  data: any
   handleCancel: Function
+  handleApply: Function
 }
 
 const ApplyModal: FunctionComponent<IApplyModalProps> = (props) => {
-  const { visible, data, handleCancel } = props
+  const { visible, handleCancel, handleApply } = props
   
   const { productId } = useParams();
   const [contact, setContact] = useState<any>({})
@@ -19,7 +19,6 @@ const ApplyModal: FunctionComponent<IApplyModalProps> = (props) => {
   useEffect(() => {
     axiosInstance.get(`/sharing/${productId}/contact`)
       .then(({ data }) => {
-        console.log('data', data)
         setContact(data)
       })
   }, [productId])
@@ -30,11 +29,14 @@ const ApplyModal: FunctionComponent<IApplyModalProps> = (props) => {
     async () => {
       if (count && count > 0) {
         try {
-          const { data } = await axiosInstance.post(`/sharing/${productId}/apply`, { number: count })
+          await axiosInstance.post(`/sharing/${productId}/apply`, { number: count })
           Modal.success({
             content: '성공적으로 참여했습니다.',
           });
 
+          if (handleApply) {
+            handleApply()
+          }
           if (handleCancel) {
             handleCancel()
           }
