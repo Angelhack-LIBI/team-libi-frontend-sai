@@ -12,6 +12,8 @@ import { useRecoilValue } from "recoil";
 import { title } from "process";
 import { meta } from "api";
 import locationState from "state/location";
+import accountState from "state/account";
+import LoginModal from "components/LoginModal";
 
 interface IAboutProps {
   // title: string;
@@ -148,7 +150,10 @@ const About: FunctionComponent<IAboutProps> = (props) => {
   
   const assignTagStyle = tagStyle[type]
 
+  const [visibleLogin, setVisibleLogin] = useState<boolean>(false)
+
   const [applyModalVisible, setApplyModalVisible] = useState<boolean>(false)
+  const account = useRecoilValue(accountState);
 
   return (
     <DefaultLayout>
@@ -186,15 +191,16 @@ const About: FunctionComponent<IAboutProps> = (props) => {
         <FlexCenter style={{ width: '100%', padding: '10px', justifyContent: 'flex-start', borderTop: '1px solid #eee' }}>
           {description}
         </FlexCenter>
-        <FlexCenter style={{ width: '100%', padding: '10px' }}>
+        {<FlexCenter style={{ width: '100%', padding: '10px' }}>
           <Button style={{ width: 'auto', backgroundColor: assignTagStyle.backgroundColor, borderColor: assignTagStyle.backgroundColor }} type="primary" htmlType="submit" onClick={
-            () => isgroupbuying ? setApplyModalVisible(true) : openContact()
+            () => account?.id ? (isgroupbuying ? setApplyModalVisible(true) : openContact()) : setVisibleLogin(true)
           }>
             {isgroupbuying ? '공동구매 참여하기' : '연락하기'}
           </Button>
-        </FlexCenter>
+        </FlexCenter>}
       </AboutComponent>
       <ApplyModal visible={applyModalVisible} data={data} handleCancel={() => setApplyModalVisible(false)} />
+      <LoginModal visible={visibleLogin} hideModal={() => setVisibleLogin(false)} />
     </DefaultLayout>
   );
 };

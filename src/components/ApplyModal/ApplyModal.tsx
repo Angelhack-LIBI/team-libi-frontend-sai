@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, ChangeEvent, useCallback, useEffect } from 'react';
-import { Modal, Input, Button } from 'antd';
+import { Modal, Input, Button, message } from 'antd';
 import FlexCenter from 'components/FlexCenter';
 import { useParams } from 'react-router-dom';
 import axiosInstance from 'api/AxiosInstance';
@@ -29,19 +29,20 @@ const ApplyModal: FunctionComponent<IApplyModalProps> = (props) => {
   const asyncFunction = useCallback(
     async () => {
       if (count && count > 0) {
+        try {
+          const { data } = await axiosInstance.post(`/sharing/${productId}/apply`, { number: count })
+          Modal.success({
+            content: '성공적으로 참여했습니다.',
+          });
 
-        const { data } = await axiosInstance.post(`/sharing/${productId}/apply`, { number: count })
-        Modal.success({
-          content: '성공적으로 참여했습니다.',
-        });
-
-        if (handleCancel) {
-          handleCancel()
+          if (handleCancel) {
+            handleCancel()
+          }
+        } catch ({ response }) {
+          message.error(response?.data?.detail);
         }
       } else {
-        Modal.error({
-          content: '갯수를 1 이상으로 선택해 주세요.'
-        });
+        message.error('갯수를 1 이상으로 선택해 주세요.');
       }
     },
     [count, handleCancel]

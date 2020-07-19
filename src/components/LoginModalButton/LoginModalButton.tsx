@@ -7,6 +7,7 @@ import accountState from 'state/account';
 import { QuestionCircleOutlined, CloseOutlined } from "@ant-design/icons";
 import FlexCenter from 'components/FlexCenter';
 import axiosInstance from 'api/AxiosInstance';
+import LoginModal from 'components/LoginModal';
 
 
 interface ILoginModalProps {
@@ -61,15 +62,7 @@ const LoginModalButton: FunctionComponent<ILoginModalProps> = (props) => {
         </Button>
       )
     }
-    <Modal
-      title="로그인"
-      visible={visible}
-      footer={null}
-      // onOk={handleOk}
-      onCancel={hideModal}
-    >
-      <LoginForm /> 
-    </Modal>
+    <LoginModal visible={visible} hideModal={hideModal} />
   </>;
 };
 
