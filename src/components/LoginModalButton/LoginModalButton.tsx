@@ -58,7 +58,7 @@ const LoginModalButton: FunctionComponent<ILoginModalProps> = (props) => {
       )
     }
     <Modal
-      title="Login"
+      title="로그인"
       visible={visible}
       footer={null}
       // onOk={handleOk}

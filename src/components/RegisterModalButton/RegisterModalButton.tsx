@@ -25,7 +25,7 @@ const RegisterModalButton: FunctionComponent<ILoginModalProps> = (props) => {
       회원가입
     </Button>
     <Modal
-      title="Register"
+      title="회원가입"
       visible={visible}
       footer={null}
       // onOk={handleOk}

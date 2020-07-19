@@ -166,15 +166,15 @@ const About: FunctionComponent<IAboutProps> = (props) => {
         </FlexCenter>
         <FlexCenter style={{ width: '100%', padding: isgroupbuying ? '10px 10px 0px 10px' : '10px', justifyContent: 'flex-start' }}>
           <span style={{ fontSize: "14px", fontWeight: "bold", color: assignTagStyle.backgroundColor }}>
-            {`${Number(data?.goal_price || 0)}원`}
+            {`${Number(data?.option?.price || 0)}원`}
           </span>
           <span style={{ fontSize: '14px', marginLeft: '5px' }}>
-            {data?.lessSellUnit ? `/ ${data?.lessSellUnit}` : ''}
+            {data?.option?.description ? `/ ${data?.option?.description}` : ''}
           </span>
         </FlexCenter>
         { isgroupbuying && <FlexCenter style={{ width: '100%', padding: '0px 10px 10px 10px', justifyContent: 'flex-start' }}>
             <span style={{ fontSize: "14px", fontWeight: "bold", color: assignTagStyle.backgroundColor }}>
-              {`현재 달성률 ${formatNumber(data?.achivement || 0)}%`}
+              {`현재 달성률 ${formatNumber(data?.achievement || 0)}%`}
             </span>
             <span style={{ fontSize: '14px', marginLeft: '5px' }}>
               {`/ 목표금액 ${formatNumber(Number(data?.goal_price || 0))}원`}
