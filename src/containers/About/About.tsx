@@ -39,7 +39,8 @@ const AboutComponent: any = styled.div`
   -o-flex-direction: column;
   flex-direction: column;
 
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   
   & .about-img {
     position: relative;
@@ -70,7 +71,8 @@ const AboutComponent: any = styled.div`
 `;
 
 const ImageDom: any = styled.div`
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   height: 300px;
   border-radius: 10px;
   background-image: url('${(props: Props) => props.image || ''}');
@@ -160,7 +162,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
               {location?.name && ` - ${location?.name}`}
             </div>
           </div>
-          <Tag style={{ marginLeft: 'auto', ...assignTagStyle }}>
+          <Tag style={{ marginLeft: 'auto', minWidth: 'fit-content', ...assignTagStyle }}>
             {isgroupbuying ? '공동구매' : '재고할인'}
           </Tag>
         </FlexCenter>

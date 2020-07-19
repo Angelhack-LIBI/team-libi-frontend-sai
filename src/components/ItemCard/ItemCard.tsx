@@ -82,7 +82,7 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
   const history = useHistory()
 
   const attrDom: any[] = data.map(({ title, content, is_focused }) => {
-    return <FlexCenter style={{ flex: "1", flexFlow: "column", padding: '4px' }}>
+    return <FlexCenter style={{ flex: "1", flexFlow: "column", padding: '4px', textAlign: 'center' }}>
       <span>{title}</span>
       <span style={{ fontSize: "14px", fontWeight: (is_focused ? "bold" : undefined) }}>
         {content}
