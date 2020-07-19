@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 import { routerMeta } from "meta";
 
 import {
-  ShopOutlined,
+  EnvironmentFilled,
   SearchOutlined,
   RadarChartOutlined,
 } from "@ant-design/icons";
@@ -47,19 +47,19 @@ const menuStyle = {
   marginLeft: "auto",
 };
 
-const defaultMenus = Object.keys(routerMeta).reduce(
-  (prev: any[], componentKey: string) => {
-    const { path } = assignRouteProps(routerMeta[componentKey]);
-    console.log("path", path);
-    const slashLength: number = (path.match(/\//gi) || []).length;
-    if (slashLength === 1 && path !== "/") {
-      return [...prev, { componentKey, path }];
-    } else {
-      return prev;
-    }
-  },
-  []
-);
+// const defaultMenus = Object.keys(routerMeta).reduce(
+//   (prev: any[], componentKey: string) => {
+//     const { path } = assignRouteProps(routerMeta[componentKey]);
+//     console.log("path", path);
+//     const slashLength: number = (path.match(/\//gi) || []).length;
+//     if (slashLength === 1 && path !== "/") {
+//       return [...prev, { componentKey, path }];
+//     } else {
+//       return prev;
+//     }
+//   },
+//   []
+// );
 
 interface HeaderWrapperProps {
   style?: CSSProperties;
@@ -241,7 +241,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             }}
           />
           {location && <FlexCenter style={{ marginTop: '20px', color: '#999', fontWeight: 'bold' }}>
-            <ShopOutlined style={{ marginRight: '5px' }} />{`${location.name}`}
+            <EnvironmentFilled style={{ marginRight: '5px' }} />{`${location.name}`}
           </FlexCenter>}
           {/* </FlexCenter> */}
         </FlexCenter>}

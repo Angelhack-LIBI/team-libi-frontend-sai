@@ -161,7 +161,9 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
           dataLength={items.length} //This is important field to render the next data
           next={onLoad}
           hasMore={!isLast}
-          loader={<Spin />}
+          loader={<p style={{ textAlign: "center" }}>
+            <Spin />
+          </p>}
           endMessage={
             <p style={{ textAlign: "center" }}>
               <b>모든 정보를 조회했습니다.</b>
