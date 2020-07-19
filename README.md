@@ -13,7 +13,7 @@
 
 ## React Boilerplate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [CRACO](https://github.com/gsoft-inc/craco).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [craco](https://github.com/gsoft-inc/craco).
 
 ## Used Library from NPM
 - UI-UX: [Ant Design](https://www.npmjs.com/package/antd)
@@ -22,7 +22,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Custom CSS Component: [Styled Component](https://www.npmjs.com/package/styled-components)
 
 ## CI/CD
-- [DockerH](https://hub.docker.com/repository/docker/dongho1596/libi-front)
+- [Docker](https://hub.docker.com/repository/docker/dongho1596/libi-front)
 - [Ainize](https://ainize.web.app/redirect?git_repo=github.com/Angelhack-LIBI/team-libi-frontend-sai)
 
 ## Available Scripts
