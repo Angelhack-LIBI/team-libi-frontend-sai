@@ -53,7 +53,7 @@ const LoginModalButton: FunctionComponent<ILoginModalProps> = (props) => {
         </Button>
       </FlexCenter> : (
         <Button type="primary" onClick={showModal}>
-          Login
+          로그인
         </Button>
       )
     }
