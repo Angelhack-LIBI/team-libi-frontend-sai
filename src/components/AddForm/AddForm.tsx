@@ -88,24 +88,41 @@ const errorModal = (err: any) => {
 }
 
 const AddForm: FunctionComponent<any> = () => {
-  const { type: sharing_type = 1 } = useParams();
-  const type = sharing_type === 1 ? 'groupbuying' : 'stackdiscount'
+  const { type: sharing_type = '1' } = useParams();
+  const type = sharing_type === '1' ? 'groupbuying' : 'stackdiscount'
 
   const history = useHistory()
+
+
 
   const category = useRecoilValue<CategoryType[]>(categoryState);
 
   const [form] = Form.useForm();
   const [picture, setPicture] = useState<any>([])
 
-  const onFinish = useCallback((values: any) => {
+  const onFinish = useCallback(async (values: any) => {
     const assignValue = { ...values, sharing_type }
     console.log("Received va lues of form: ", assignValue);
     const formData = new FormData();
     Object.keys(assignValue).map(key => {
       const value = assignValue[key]
-      formData.append(key, value)
+      if (key === 'photo') {
+        if (Array.isArray(value)) {
+          value.forEach((photo: any, index: number) => {
+            formData.append(`photo[${index}]`, photo)
+          })
+        } else {
+          formData.append('photo[0]', value)
+        }
+      } else {
+        formData.append(key, value)
+      }
     })
+
+    const { data: location } = await axiosInstance.get('/sharing/area/me')
+    if (location) {
+      formData.append('area_id', String(location?.id || 1))
+    }
 
     axiosInstance.post('/sharing/', formData, {
       headers: {'Content-Type': 'multipart/form-data'}
@@ -122,7 +139,6 @@ const AddForm: FunctionComponent<any> = () => {
   }, [sharing_type]);
 
   const onDrop = (picture: any) => {
-    console.log('picture', picture)
     setPicture(picture)
   }
 
@@ -147,7 +163,7 @@ const AddForm: FunctionComponent<any> = () => {
         >
           <Input />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           name="area_id"
           label="지역코드"
           initialValue={1}
@@ -159,7 +175,7 @@ const AddForm: FunctionComponent<any> = () => {
           ]}
         >
           <Input />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
           name="category_id"
           label="상품타입"

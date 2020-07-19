@@ -2,7 +2,6 @@ import axios from 'axios'
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import meta from 'api/meta';
 
-
 const axiosInstance = axios.create(meta);
 
 const getAccessToken = () => localStorage.getItem('libi_token');
