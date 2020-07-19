@@ -36,6 +36,7 @@ interface IDefaultLayoutProps {
 }
 
 const defaultStyle = {
+  display: 'flex',
   height: "100%",
   backgroundColor: "white",
 };
@@ -201,7 +202,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
           overflow: "auto",
         }}
       >
-        {haveSearch && <FlexCenter
+        {haveSearch && <div><FlexCenter
           style={{
             flex: "1",
             flexFlow: "column",
@@ -244,7 +245,7 @@ const DefaultLayout: FunctionComponent<IDefaultLayoutProps> = (props) => {
             <EnvironmentFilled style={{ marginRight: '5px' }} />{`${location.name || '위치 확인중...'}`}
           </FlexCenter>}
           {/* </FlexCenter> */}
-        </FlexCenter>}
+        </FlexCenter></div>}
         {/* <Layout style={{ padding: "0 24px 24px" }}> */}
         {/* <Breadcrumb style={{ margin: "16px 0" }}>{pathDom}</Breadcrumb> */}
         <Content
