@@ -36,6 +36,18 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### `npm run docker-build`
+
+Builds the app for production to the docker container.<br />
+
+### `npm run docker-deploy`
+
+Deploy container built from "docker-build" to Docker Hub.<br />
+
+### `npm run docker-run`
+
+Run container built from "docker-build".<br />
+
 ### ~~`npm run eject`~~
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
