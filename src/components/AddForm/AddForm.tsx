@@ -94,8 +94,6 @@ const AddForm: FunctionComponent<any> = () => {
 
   const history = useHistory()
 
-
-
   const category = useRecoilValue<CategoryType[]>(categoryState);
 
   const [form] = Form.useForm();
@@ -132,7 +130,7 @@ const AddForm: FunctionComponent<any> = () => {
       Modal.success({
         content: '등록이 완료되었습니다',
       });
-      history.goBack()
+      history.replace('/', { refresh: true })
     }).catch(({ response }) => {
       message.error(response?.data?.detail);
     })
