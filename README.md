@@ -1,14 +1,23 @@
 # LIBI Front
 
+[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/Angelhack-LIBI/Inventory-Handling-Service-Front)
+
 ## 엔젤핵 서울 2020 해커톤 LIBI팀 프론트엔드 프로젝트 
 
 우리동네 소상공인 공동구매 플랫폼 : 사이
+### [Demo](https://libi-front-gongdongho12.endpoint.ainize.ai/)
 
-[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/Angelhack-LIBI/Inventory-Handling-Service-Front)
+![스크린샷](./public/rendered_capture_style.png)
 
-[DEMO URL](https://libi-front-gongdongho12.endpoint.ainize.ai/) by Ainize
+## React Boilerplate
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [CRACO](https://github.com/gsoft-inc/craco).
+
+## Used Library from NPM
+- UI-UX: [Ant Design](https://www.npmjs.com/package/antd)
+- State Management: [Recoil](https://www.npmjs.com/package/recoil)
+- HTTP client: [Axios](https://www.npmjs.com/package/axios)
+- Custom CSS Component: [Styled Component](https://www.npmjs.com/package/styled-components)
 
 ## Available Scripts
 
