@@ -1,5 +1,5 @@
 import React, { useState, FunctionComponent, useCallback, useEffect, useMemo } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Modal, message } from 'antd';
 import LoginForm from 'components/LoginForm';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import tokenState from 'state/token';
@@ -27,10 +27,14 @@ const LoginModalButton: FunctionComponent<ILoginModalProps> = (props) => {
 
   const onDrop = useCallback(
     async () => {
-      const deleted = await axiosInstance.delete('/account/token')
-      setToken('')
-      setAccount({})
-      localStorage.setItem("libi_token", "")
+      try {
+        await axiosInstance.delete('/account/token')
+        setToken('')
+        setAccount({})
+        localStorage.setItem("libi_token", "")
+      } catch ({ response }) {
+        message.error(response?.data?.detail);
+      }
     },
     [],
   )
