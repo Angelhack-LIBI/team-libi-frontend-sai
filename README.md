@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/github/v/release/Angelhack-LIBI/team-libi-frontend-sai) ![](https://img.shields.io/badge/license-MIT-green) ![](https://img.shields.io/docker/cloud/build/dongho1596/libi-front) ![](https://img.shields.io/docker/image-size/dongho1596/libi-front/latest)
 
-[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/Angelhack-LIBI/Inventory-Handling-Service-Front)
+[![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/Angelhack-LIBI/team-libi-frontend-sai)
 
 ## 엔젤핵 서울 2020 해커톤 LIBI팀 프론트엔드 프로젝트 
 
@@ -20,6 +20,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - State Management: [Recoil](https://www.npmjs.com/package/recoil)
 - HTTP client: [Axios](https://www.npmjs.com/package/axios)
 - Custom CSS Component: [Styled Component](https://www.npmjs.com/package/styled-components)
+
+## CI/CD
+- [DockerH](https://hub.docker.com/repository/docker/dongho1596/libi-front)
+- [Ainize](https://ainize.web.app/redirect?git_repo=github.com/Angelhack-LIBI/team-libi-frontend-sai)
 
 ## Available Scripts
 
