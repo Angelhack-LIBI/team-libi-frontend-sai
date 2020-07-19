@@ -23,8 +23,10 @@ const App: FunctionComponent<any> = () => {
   const [, setCategory] = useRecoilState<CategoryType[]>(categoryState);
   const [, setLocation] = useRecoilState<any>(locationState);
   
-
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+    });
+
     axiosInstance.get('/sharing/category')
       .then(({ data }) => {
         setCategory(data)

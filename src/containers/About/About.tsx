@@ -75,7 +75,7 @@ const ImageDom: any = styled.div`
   max-width: 400px;
   height: 300px;
   border-radius: 10px;
-  background-image: url('${(props: Props) => props.image || ''}');
+  ${(props: Props) => props?.image ? `background-image: url('${props.image}');` : ''}
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -140,7 +140,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
     
   }, [productId])
 
-  const { title, sharing_type = 1, description, category_id, photo_urls = ["https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"], achievement } = data
+  const { title, sharing_type = 1, description, category_id, photo_urls = [""] } = data
 
   const type = sharing_type === 1 ? 'groupbuying' : 'stackdiscount'
 
@@ -153,7 +153,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
   return (
     <DefaultLayout>
       <AboutComponent>
-        <ImageDom image={baseURL + photo_urls[0]} />
+        <ImageDom image={photo_urls[0] ? (baseURL + photo_urls[0]) : ""} />
         <FlexCenter style={{ width: '100%', padding: '10px' }}>
           <div style={{ flexFlow: 'column', fontWeight: 'bold', fontSize: '18px' }}>
             {title || '고급형 냉장고'}
