@@ -40,7 +40,7 @@ const size = 24
 const MenuDom: FunctionComponent<any> = () => {
   const history = useHistory()
 
-  return <Menu>
+  return <Menu style={{ border: '1px solid #eeeeee' }}>
     <Menu.Item onClick={() => history.push('/add/1')}>
       공동구매 상품등록
     </Menu.Item>
@@ -181,7 +181,7 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
         </InfiniteScroll>
       </InfinityScrollWrapper>
       {account?.id && <div style={{ position: "fixed", bottom: "20px", right: "20px" }}>
-        <Dropdown overlay={<MenuDom />} placement="topRight" arrow>
+        <Dropdown overlay={<MenuDom />} trigger={'click'} placement="topRight" arrow>
           <Button
             type="primary"
             shape="circle"
@@ -189,7 +189,6 @@ const Home: FunctionComponent<ICardViewProps> = (props) => {
             icon={<PlusOutlined />}
           />
         </Dropdown>
-        {/* {onClick={() => history.push('/add/')}} */}
       </div>}
     </DefaultLayout>
   );
