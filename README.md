@@ -8,7 +8,7 @@
 
 [DEMO URL](https://libi-front-gongdongho12.endpoint.ainize.ai/) by Ainize
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) with [CRACO](https://github.com/gsoft-inc/craco).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [CRACO](https://github.com/gsoft-inc/craco).
 
 ## Available Scripts
 
