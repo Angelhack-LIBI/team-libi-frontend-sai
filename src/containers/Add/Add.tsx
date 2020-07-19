@@ -8,7 +8,10 @@ interface ILoginProps {
 }
 
 const Add: FunctionComponent<ILoginProps> = (props) => {
-  let { type = 'groupbuying' } = useParams();
+  let { type: sharing_type = '1' } = useParams();
+  console.log('sharing_type', sharing_type)
+  const type = sharing_type === '1' ? 'groupbuying' : 'stackdiscount'
+  console.log('type', type)
 
   return <DefaultLayout>
     <FlexCenter style={{ fontSize: '20px', fontWeight: 'bold', color: '#666', marginBottom: '20px' }}>

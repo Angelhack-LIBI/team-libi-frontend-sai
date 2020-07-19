@@ -102,7 +102,6 @@ const ItemCard: FunctionComponent<IItemCardProps> = ({
         }}
       />
     );
-    console.log('attrDom', attrDom)
   }
 
   return (

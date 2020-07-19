@@ -16,10 +16,12 @@ import DefaultLayout from "components/DefaultLayout";
 import langState, { messages } from "state/lang";
 import categoryState, { CategoryType } from "state/category";
 import axiosInstance from "api/AxiosInstance";
+import locationState from "state/location";
 
 const App: FunctionComponent<any> = () => {
   const lang = useRecoilValue(langState);
   const [, setCategory] = useRecoilState<CategoryType[]>(categoryState);
+  const [, setLocation] = useRecoilState<any>(locationState);
   
 
   useEffect(() => {
@@ -27,8 +29,13 @@ const App: FunctionComponent<any> = () => {
       .then(({ data }) => {
         setCategory(data)
       })
+    axiosInstance.get('/sharing/area/me')
+      .then(({ data }) => {
+        setLocation(data)
+      })
     return () => {
       setCategory([])
+      setLocation({})
     }
   }, [])
 

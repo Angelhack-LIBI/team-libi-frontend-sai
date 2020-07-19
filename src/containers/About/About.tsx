@@ -11,6 +11,7 @@ import categoryState, { CategoryType } from "state/category";
 import { useRecoilValue } from "recoil";
 import { title } from "process";
 import { meta } from "api";
+import locationState from "state/location";
 
 interface IAboutProps {
   // title: string;
@@ -75,6 +76,7 @@ const ImageDom: any = styled.div`
   background-image: url('${(props: Props) => props.image || ''}');
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
   border: 1px solid #eee;
   /* background-position: 10% 100px; */
 
@@ -117,6 +119,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
   const [data, setData] = useState<any>({})
 
   const category = useRecoilValue<CategoryType[]>(categoryState);
+  const location = useRecoilValue<any>(locationState)
 
   const openContact = useCallback(
     async () => {
@@ -135,7 +138,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
     
   }, [productId])
 
-  const { title, sharing_type = 1, description, category_id, photo_urls = ["https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"] } = data
+  const { title, sharing_type = 1, description, category_id, photo_urls = ["https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"], achievement } = data
 
   const type = sharing_type === 1 ? 'groupbuying' : 'stackdiscount'
 
@@ -154,6 +157,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
             {title || '고급형 냉장고'}
             <div style={{ color: '#999999', fontSize: '14px' }}>
               {category.find(v => v.id === category_id)?.title}
+              {location?.name && ` - ${location?.name}`}
             </div>
           </div>
           <Tag style={{ marginLeft: 'auto', ...assignTagStyle }}>
@@ -170,7 +174,7 @@ const About: FunctionComponent<IAboutProps> = (props) => {
         </FlexCenter>
         { isgroupbuying && <FlexCenter style={{ width: '100%', padding: '0px 10px 10px 10px', justifyContent: 'flex-start' }}>
             <span style={{ fontSize: "14px", fontWeight: "bold", color: assignTagStyle.backgroundColor }}>
-              {`현재 달성률 ${formatNumber(data?.percent || 0)}%`}
+              {`현재 달성률 ${formatNumber(data?.achivement || 0)}%`}
             </span>
             <span style={{ fontSize: '14px', marginLeft: '5px' }}>
               {`/ 목표금액 ${formatNumber(Number(data?.goal_price || 0))}원`}
